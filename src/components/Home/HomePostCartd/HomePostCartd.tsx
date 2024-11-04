@@ -4,42 +4,37 @@ import { FaArrowUp, FaArrowDown, FaShareAlt } from "react-icons/fa";
 import { useState } from "react";
 // import InfiniteScroll from "react-infinite-scroll-component";
 
-import { toast } from "sonner";
-
 import Link from "next/link";
 
 // import { useRef } from "react";
 
 // import DropdownToggle from "../../profilePage/handleDropdownToggle/handleDropdownToggle";
 // import CommentModal from "../../profilePage/comentModal/CommentModal";
-import { logInUser, Tcommet, TPost, TPostData } from "@/types";
+import { Tcommet, TPost, TPostData } from "@/types";
 import CardLoder from "@/components/Loader/CardLoder/CardLoder";
-import { currentUser } from "@/Services/AuthService";
+
 import CommentModal from "@/components/ProfilePage/Comment/CommentModal";
 
-import { useGetComment } from "@/hooks/comment.hook";
+import { useAddComment, useGetComment } from "@/hooks/comment.hook";
+import { currentUser } from "@/Services/AuthService";
 
 interface data {
   data: TPostData;
   isLoading: boolean;
 }
 const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
-  if (isLoading) {
-    return (
-      <div className="flex justify-center ">
-        <CardLoder></CardLoder>
-      </div>
-    );
-  }
   // const contentRef = useRef<HTMLDivElement>(null);
-  // const handleUser = async () => {
-  //   const user = await currentUser();
-  //   console.log(user._id);
-  // };
-  // handleUser();
+  const { mutate: addComment, isPending } = useAddComment();
+  const [userId, setUserId] = useState("");
+  const handleUser = async () => {
+    // console.log(user._id);
+    // setUserId(user?._id);
+  };
+
   const [postid, setPostId] = useState("");
+  const { data: comments, isLoading: comentLoader } = useGetComment(postid);
   const [showModal, setShowModal] = useState(false);
-  // const [addComment] = useCreteCommentMutation();
+
   // const [page, setPage] = useState<number>(1);
   // const [hasMore, setHasMore] = useState<boolean>(true);
 
@@ -50,17 +45,6 @@ const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
 
   // const [postvote] = usePostVoteMutation();
   // const [deletePost] = useDeleteCommentMutation();
-
-  const { data: comments, isLoading: comentLoader } = useGetComment(postid);
-
-  if (comentLoader) {
-    return (
-      <span>
-        <p>Loading</p>
-      </span>
-    );
-  }
-  console.log("comments");
 
   const handleOpenModal = (id: string) => {
     setPostId(id);
@@ -108,30 +92,22 @@ const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
   //   setDownvoted(!downvoted);
   //   if (upvoted) setUpvoted(false);
   // };
-  // const handleAddComment = async (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //   const formData = new FormData(event.currentTarget); // Get form data
-  //   const text = formData.get("text") as string;
-  //   const commentInfo = {
-  //     user: user?._id,
-  //     post: postid,
-  //     text,
-  //   };
-  //   const tostid = toast.loading(" comment createing...");
-  //   try {
-  //     const res = await addComment(commentInfo); // Pass FormData to Redux action
-  //     console.log("res", res);
+  const handleAddComment = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-  //     if (res.error) {
-  //       toast.error("Something went wrong", { id: tostid });
-  //     } else {
-  //       toast.success("comment created successfully", { id: tostid });
-  //     }
-  //   } catch (error) {
-  //     console.log("Error:", error);
-  //   }
-  //   // Prevent page reload on form submission
-  // };
+    const formData = new FormData(event.currentTarget); // Get form data
+    const text = formData.get("text") as string;
+    const user = await currentUser();
+    const commentInfo = {
+      user: user?._id,
+      post: postid,
+      text,
+    };
+    console.log("userID", userId);
+
+    console.log(commentInfo);
+    addComment(commentInfo);
+  };
   // if (data?.data?.length === 0) {
   //   setHasMore(false); // If no more posts, stop fetching
   // }
@@ -181,7 +157,16 @@ const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
   //     pdf.save(`gardening_tips_${new Date().toISOString()}.pdf`);
   //   }
   // };
-
+  if (isLoading) {
+    return (
+      <div>
+        <CardLoder></CardLoder>
+      </div>
+    );
+  }
+  if (comentLoader) {
+    return <CardLoder></CardLoder>;
+  }
   return (
     <div>
       {data?.data?.map((item: TPost) => (
@@ -271,7 +256,7 @@ const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
           <div className="mt-2">
             {item.image ? (
               <Image
-                src={item.image}
+                src={item?.image}
                 alt="Post image"
                 className="w-full h-auto"
                 width={500}
@@ -347,13 +332,30 @@ const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
                 {comments?.data.map((comment: Tcommet) => (
                   <div key={comment?._id} className="mb-4">
                     <div className="flex justify-between items-center">
-                      <Image
-                        className="rounded-full mr-3"
-                        src={comment?.user.image}
-                        height={40}
-                        width={40}
-                        alt="img"
-                      ></Image>
+                      {comment?.user?.image ? (
+                        <>
+                          {" "}
+                          <Image
+                            className="rounded-full mr-3"
+                            src={comment?.user.image}
+                            height={40}
+                            width={40}
+                            alt="img"
+                          ></Image>
+                        </>
+                      ) : (
+                        <>
+                          {" "}
+                          <Image
+                            className="rounded-full mr-3"
+                            src="https://i0.wp.com/jiggambia.com/wp-content/uploads/2024/01/19e156dd3f2d29d0b5e8b081729abe9b.jpg?fit=400%2C400&ssl=1"
+                            height={40}
+                            width={40}
+                            alt="img"
+                          ></Image>
+                        </>
+                      )}
+
                       <p className="text-gray-700 text-sm">{comment.text}</p>
                       <div className="flex space-x-2">
                         <button className="text-sm text-blue-500 hover:underline">
@@ -372,8 +374,7 @@ const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
                 ))}
 
                 <div className="mt-4">
-                  <form>
-                    {/* onSubmit={handleAddComment} */}
+                  <form onSubmit={handleAddComment}>
                     <input
                       type="text"
                       name="text"

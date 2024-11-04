@@ -19,14 +19,7 @@ const CommonPage = () => {
     isSuccess: categorySuccess,
     isLoading,
   } = useGetAllPost(catagoryParam, searchParam);
-  if (isLoading) {
-    return (
-      <div className="flex justify-center ">
-        {/* <CardLoder></CardLoder> */}
-        <p>Loading</p>
-      </div>
-    );
-  }
+
   console.log(catagoryParam, searchParam);
   console.log(CategoryData);
 
@@ -37,7 +30,7 @@ const CommonPage = () => {
           setParm={setCatagoryParm}
           setSearchParm={setSearchParm}
         ></SearchFilter>
-        <HomePostCard></HomePostCard>
+        <HomePostCard data={CategoryData} isLoading={isLoading}></HomePostCard>
       </div>
     </div>
   );

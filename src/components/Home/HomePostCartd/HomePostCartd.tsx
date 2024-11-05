@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { FaArrowUp, FaArrowDown, FaShareAlt } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import InfiniteScroll from "react-infinite-scroll-component";
 
 import Link from "next/link";
@@ -15,7 +15,11 @@ import CardLoder from "@/components/Loader/CardLoder/CardLoder";
 
 import CommentModal from "@/components/ProfilePage/Comment/CommentModal";
 
-import { useAddComment, useGetComment } from "@/hooks/comment.hook";
+import {
+  useAddComment,
+  useDeleteComment,
+  useGetComment,
+} from "@/hooks/comment.hook";
 import { currentUser } from "@/Services/AuthService";
 
 interface data {
@@ -26,12 +30,9 @@ const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
   // const contentRef = useRef<HTMLDivElement>(null);
   const { mutate: addComment, isPending } = useAddComment();
   const [userId, setUserId] = useState("");
-  const handleUser = async () => {
-    // console.log(user._id);
-    // setUserId(user?._id);
-  };
 
   const [postid, setPostId] = useState("");
+
   const { data: comments, isLoading: comentLoader } = useGetComment(postid);
   const [showModal, setShowModal] = useState(false);
 
@@ -44,7 +45,7 @@ const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
   // Await the Promise here
 
   // const [postvote] = usePostVoteMutation();
-  // const [deletePost] = useDeleteCommentMutation();
+  const { mutate: deleteComment } = useDeleteComment();
 
   const handleOpenModal = (id: string) => {
     setPostId(id);
@@ -326,9 +327,16 @@ const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
           {/* Comments Modal */}
           {showModal && (
             <CommentModal onClose={() => setShowModal(false)}>
-              <div className="p-4">
-                <h3 className="text-lg font-semibold mb-4">Comments</h3>
-
+              <div className="p-4 inline">
+                <h3 className="text-lg font-semibold mb-4 inline">Comments</h3>
+                <div className="flex justify-end ">
+                  <p
+                    className="text-xl inline cursor-pointer"
+                    onClick={() => setShowModal(false)}
+                  >
+                    X
+                  </p>
+                </div>
                 {comments?.data.map((comment: Tcommet) => (
                   <div key={comment?._id} className="mb-4">
                     <div className="flex justify-between items-center">
@@ -362,7 +370,7 @@ const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
                           Edit
                         </button>
                         <button
-                          // onClick={() => deletePost(comment?._id)}
+                          onClick={() => deleteComment(comment?._id)}
                           className="text-sm text-red-500 hover:underline"
                         >
                           Delete

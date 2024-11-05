@@ -1,3 +1,5 @@
+import { FieldValues } from "react-hook-form";
+
 export interface IQurey {
   name?: string | undefined;
   value?: string | undefined;
@@ -78,4 +80,9 @@ export interface updateInfo {
     category: string;
   };
   postid: string;
+}
+
+export interface profileImage {
+  user: string;
+  data: FieldValues;
 }

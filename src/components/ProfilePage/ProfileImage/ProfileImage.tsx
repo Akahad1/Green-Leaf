@@ -1,17 +1,21 @@
 "use client";
 
-import { useGetUser } from "@/hooks/user.hook";
+import {
+  useAddCoverImage,
+  useAddProfileImage,
+  useGetUser,
+} from "@/hooks/user.hook";
 
 import Image from "next/image";
 import React from "react";
-import { toast } from "sonner";
+
 import { ProfileCommonPageProps } from "../ProfileCommonPage/ProfileCommonPage";
 
 const ProfileImage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   const { data: userData, isLoading } = useGetUser(userId);
 
-  //   const [addProfile] = useUpdateUserImagesMutation();
-  //   const [updateCoverImage] = useUpdateCoverImageMutation();
+  const { mutate: addProfile } = useAddProfileImage();
+  const { mutate: updateCoverImage } = useAddCoverImage();
 
   // Handle profile image upload
   console.log("userId", userId);
@@ -46,17 +50,12 @@ const ProfileImage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
       data: formData,
     };
     console.log(profileInfo);
-    const tostID = toast.loading("Update Images...");
-    // try {
-    //   const res = await addProfile(profileInfo);
-    //   if (res.error) {
-    //     toast.error("Something went wrong", { id: tostID });
-    //   } else {
-    //     toast.success(" Images Upload successfully", { id: tostID });
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
+
+    try {
+      addProfile(profileInfo);
+    } catch (error) {
+      console.error(error);
+    }
   };
   const uploadCoverImage = async (file: File) => {
     const formData = new FormData();
@@ -69,17 +68,12 @@ const ProfileImage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
       data: formData,
     };
     console.log(profileInfo);
-    const tostID = toast.loading("Update Images...");
-    // try {
-    //   const res = await updateCoverImage(profileInfo);
-    //   if (res.error) {
-    //     toast.error("Something went wrong", { id: tostID });
-    //   } else {
-    //     toast.success("update CoverImage successfully", { id: tostID });
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
+
+    try {
+      updateCoverImage(profileInfo);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   if (isLoading) {

@@ -1,6 +1,7 @@
 "use client";
 
 import ProfileImage from "../ProfileImage/ProfileImage";
+import ProfileInfo from "../ProfileInfo/ProfileInfo";
 
 export interface ProfileCommonPageProps {
   userId: string; // or whatever type userId should be
@@ -14,7 +15,7 @@ const ProfileCommonPage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
           <ProfileImage userId={userId}></ProfileImage>
 
           {/* Profile Info */}
-          {/* <ProfileInfo></ProfileInfo> */}
+          <ProfileInfo userId={userId}></ProfileInfo>
         </div>
       </div>
 

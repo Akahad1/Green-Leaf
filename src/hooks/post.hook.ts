@@ -1,6 +1,13 @@
-import { deletedPost, getAllPost, updatePost } from "@/Services/AllPost";
+import {
+  createPost,
+  deletedPost,
+  getAllPost,
+  updatePost,
+} from "@/Services/AllPost";
+import { updateInfo } from "@/types";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
 export const useGetAllPost = (catagory: string, searchParam: string) => {
@@ -28,11 +35,28 @@ export const useDeletePost = () => {
 };
 export const useUpdatePost = () => {
   const queryClient = useQueryClient();
-  return useMutation<any, Error, string>({
+  return useMutation<any, Error, updateInfo>({
     mutationKey: ["post"],
-    mutationFn: async (postid) => await updatePost(postid),
+    mutationFn: async (updateData) => await updatePost(updateData),
     onSuccess: () => {
       toast.success("post Update Successfully");
+      queryClient.invalidateQueries({
+        queryKey: ["post"], // your query key
+        exact: false, // whether to invalidate only exact matches
+      });
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+export const useCreatePost = () => {
+  const queryClient = useQueryClient();
+  return useMutation<any, Error, FieldValues>({
+    mutationKey: ["post"],
+    mutationFn: async (updateData) => await createPost(updateData),
+    onSuccess: () => {
+      toast.success("post Create Successfully");
       queryClient.invalidateQueries({
         queryKey: ["post"], // your query key
         exact: false, // whether to invalidate only exact matches

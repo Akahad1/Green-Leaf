@@ -1,5 +1,6 @@
 "use client";
 
+import PostEditorModal from "../PostCreator/PostCreator";
 import ProfileImage from "../ProfileImage/ProfileImage";
 import ProfileInfo from "../ProfileInfo/ProfileInfo";
 
@@ -26,8 +27,8 @@ const ProfileCommonPage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
         </div>
         <div className=" lg:col-span-7 ">
           <div className="lg:mr-10 lg:ml-10 m-5 lg:m-0">
-            {/* <PostEditorModal></PostEditorModal>
-            <PostCard></PostCard> */}
+            <PostEditorModal userId={userId}></PostEditorModal>
+            {/* <PostCard></PostCard> */}
           </div>
         </div>
       </div>

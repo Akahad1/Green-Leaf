@@ -21,6 +21,7 @@ import {
   useGetComment,
 } from "@/hooks/comment.hook";
 import { currentUser } from "@/Services/AuthService";
+import DropdownToggle from "@/components/ProfilePage/DropdownToggle/DropdownToggle";
 
 interface data {
   data: TPostData;
@@ -99,6 +100,7 @@ const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
     const formData = new FormData(event.currentTarget); // Get form data
     const text = formData.get("text") as string;
     const user = await currentUser();
+    setUserId(user?._id);
     const commentInfo = {
       user: user?._id,
       post: postid,
@@ -237,14 +239,14 @@ const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
             <div>
               {/* Dropdown logic for Edit/Delete goes here */}
 
-              {/* <DropdownToggle
+              <DropdownToggle
                 postid={item?._id}
                 userPostId={item.user?._id}
-                userId={user?._id}
+                userId={userId}
                 currentCategory={item?.catagory}
                 currentImage={item?.image}
                 currentText={item?.text}
-              ></DropdownToggle> */}
+              ></DropdownToggle>
             </div>
           </div>
 

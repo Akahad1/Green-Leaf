@@ -70,3 +70,12 @@ export interface logInUser {
   _id: string;
   role: string;
 }
+
+export interface updateInfo {
+  data: {
+    text: string;
+    image: string;
+    category: string;
+  };
+  postid: string;
+}

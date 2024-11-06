@@ -86,3 +86,8 @@ export interface profileImage {
   user: string;
   data: FieldValues;
 }
+export interface TPostvote {
+  id: string;
+  user: string;
+  vote: string;
+}

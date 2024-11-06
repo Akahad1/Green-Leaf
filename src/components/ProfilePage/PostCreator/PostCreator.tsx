@@ -6,8 +6,6 @@ import { Editor, EditorState, RichUtils } from "draft-js";
 import "draft-js/dist/Draft.css";
 import Image from "next/image";
 import Link from "next/link";
-
-import { toast } from "sonner";
 import { ProfileCommonPageProps } from "../ProfileCommonPage/ProfileCommonPage";
 import { useCreatePost } from "@/hooks/post.hook";
 

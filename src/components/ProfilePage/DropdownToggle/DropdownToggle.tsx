@@ -58,14 +58,11 @@ const DropdownToggle: React.FC<DropdownToggleProps> = ({
         postid,
       };
 
-      const res = await updatePost(updateInfo);
-      console.log(res);
+      updatePost(updateInfo);
 
       if (isSuccess) {
         setIsEditModalOpen(false);
       }
-
-      console.log(res);
     } catch (error) {
       console.log("error", error);
     }

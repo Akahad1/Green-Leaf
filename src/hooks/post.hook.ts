@@ -2,9 +2,11 @@ import {
   createPost,
   deletedPost,
   getAllPost,
+  getspecificUserPost,
+  Postvote,
   updatePost,
 } from "@/Services/AllPost";
-import { updateInfo } from "@/types";
+import { TPostvote, updateInfo } from "@/types";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
@@ -14,6 +16,12 @@ export const useGetAllPost = (catagory: string, searchParam: string) => {
   return useQuery({
     queryKey: ["post", catagory, searchParam],
     queryFn: async () => await getAllPost(catagory, searchParam),
+  });
+};
+export const useGetSpecificUserPost = (userId: string) => {
+  return useQuery({
+    queryKey: ["post", userId],
+    queryFn: async () => await getspecificUserPost(userId),
   });
 };
 export const useDeletePost = () => {
@@ -48,6 +56,20 @@ export const useUpdatePost = () => {
     onError: (error) => {
       toast.error(error.message);
     },
+  });
+};
+export const usePostVote = () => {
+  const queryClient = useQueryClient();
+  return useMutation<any, Error, TPostvote>({
+    mutationKey: ["post"],
+    mutationFn: async (postData) => await Postvote(postData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["post"], // your query key
+        exact: false, // whether to invalidate only exact matches
+      });
+    },
+    onError: (error) => {},
   });
 };
 export const useCreatePost = () => {

@@ -1,5 +1,6 @@
 "use client";
 
+import FollowersList from "../Follower/Follower";
 import PostCard from "../PostCard/PostCard";
 import PostEditorModal from "../PostCreator/PostCreator";
 import ProfileImage from "../ProfileImage/ProfileImage";
@@ -23,8 +24,7 @@ const ProfileCommonPage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
 
       <div className="container  lg:grid lg:grid-cols-12 lg:p-10 pt-10  relative w-full  bg-gray-100 ">
         <div className="lg:col-span-5 hidden w-full lg:static lg:flex h-32 top-64 mt-10 left-10 p-6   ml-16">
-          {/* <Follwer></Follwer> */}
-          {/* <FollowersList></FollowersList> */}
+          <FollowersList userId={userId}></FollowersList>
         </div>
         <div className=" lg:col-span-7 ">
           <div className="lg:mr-10 lg:ml-10 m-5 lg:m-0">

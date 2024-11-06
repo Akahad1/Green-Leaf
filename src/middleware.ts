@@ -4,8 +4,23 @@ import { currentUser } from "./Services/AuthService";
 
 export async function middleware(request: NextRequest) {
   const AuthRouter = ["/login", "/singup"];
-  const AdminRoute = ["/aboutUs", "/profile", "/imageGallery", "/"];
-  const userRoute = ["/aboutUs", "/profile", "/imageGallery", "/"];
+  const AdminRoute = [
+    "/aboutUs",
+    "/profile",
+    "/imageGallery",
+    "/",
+    "/deshbord/activiy",
+    "/deshbord/allUser",
+  ];
+  const userRoute = [
+    "/aboutUs",
+    "/profile",
+    "/imageGallery",
+    "/",
+    "/deshbord/myContent",
+    "/deshbord/myFollower",
+    "/deshbord/myFollowing",
+  ];
   const { pathname } = request.nextUrl;
   console.log(pathname);
 
@@ -31,5 +46,17 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/login", "/singup", "/aboutUs", "/profile", "/imageGallery", "/"],
+  matcher: [
+    "/login",
+    "/singup",
+    "/aboutUs",
+    "/profile",
+    "/imageGallery",
+    "/",
+    "/deshbord/myContent",
+    "/deshbord/myFollower",
+    "/deshbord/myFollowing",
+    "/deshbord/activiy",
+    "/deshbord/allUser",
+  ],
 };

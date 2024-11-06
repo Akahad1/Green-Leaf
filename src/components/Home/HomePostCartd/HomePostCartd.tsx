@@ -23,6 +23,7 @@ import {
 import { currentUser } from "@/Services/AuthService";
 import DropdownToggle from "@/components/ProfilePage/DropdownToggle/DropdownToggle";
 import { usePostVote } from "@/hooks/post.hook";
+import { toast } from "sonner";
 
 interface data {
   data: TPostData;
@@ -121,16 +122,16 @@ const HomePostCard: React.FC<data> = ({ data, isLoading, currentUserId }) => {
   //   }
   // };
 
-  // const handleShare = async (postId: string) => {
-  //   const postUrl = `${window.location.origin}/posts/${postId}`; // Construct the post URL
-  //   try {
-  //     await navigator.clipboard.writeText(postUrl); // Copy URL to clipboard
-  //     toast.success("Post URL copied to clipboard!"); // Notify user
-  //   } catch (error) {
-  //     console.error("Failed to copy: ", error);
-  //     toast.error("Failed to copy URL"); // Notify user on error
-  //   }
-  // };
+  const handleShare = async (postId: string) => {
+    const postUrl = `${window.location.origin}/posts/${postId}`; // Construct the post URL
+    try {
+      await navigator.clipboard.writeText(postUrl); // Copy URL to clipboard
+      toast.success("Post URL copied to clipboard!"); // Notify user
+    } catch (error) {
+      console.error("Failed to copy: ", error);
+      toast.error("Failed to copy URL"); // Notify user on error
+    }
+  };
 
   // const generatePDF = async () => {
   //   if (contentRef.current) {
@@ -311,7 +312,7 @@ const HomePostCard: React.FC<data> = ({ data, isLoading, currentUserId }) => {
             </div>
             <div>
               <button
-                // onClick={() => handleShare(item?._id)}
+                onClick={() => handleShare(item?._id)}
                 className="flex items-center text-gray-600 hover:text-blue-500 space-x-1"
               >
                 <FaShareAlt />

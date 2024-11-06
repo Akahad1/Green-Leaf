@@ -1,7 +1,7 @@
 "use server";
 
 import AxiosInstance from "@/lib/AuthInstanse";
-import { profileImage } from "@/types";
+import { profileImage, TFollow } from "@/types";
 
 export const getUser = async (UserId: string): Promise<any> => {
   try {
@@ -47,6 +47,18 @@ export const updateUserinfo = async (
     const { data } = await AxiosInstance.put(
       `/user/image/${profileInfo.user}`,
       profileInfo.data
+    );
+
+    return data;
+  } catch (err: any) {
+    throw new Error(err.message);
+  }
+};
+export const FollowUser = async (profileInfo: TFollow): Promise<any> => {
+  try {
+    const { data } = await AxiosInstance.put(
+      `/user/${profileInfo.userId}`,
+      profileInfo
     );
 
     return data;

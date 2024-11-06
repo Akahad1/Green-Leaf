@@ -1,10 +1,11 @@
 import {
+  FollowUser,
   getUser,
   updateUserCoverImage,
   updateUserImage,
   updateUserinfo,
 } from "@/Services/User";
-import { profileImage } from "@/types";
+import { profileImage, TFollow } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -63,5 +64,19 @@ export const useAddUserInfo = () => {
     onError: (error) => {
       toast.error(error.message);
     },
+  });
+};
+export const useFollowUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation<any, Error, TFollow>({
+    mutationKey: ["user"],
+    mutationFn: async (profileInfo) => await FollowUser(profileInfo),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["user"], // your query key
+        exact: false, // whether to invalidate only exact matches
+      });
+    },
+    onError: (error) => {},
   });
 };

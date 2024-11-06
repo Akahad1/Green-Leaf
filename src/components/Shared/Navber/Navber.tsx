@@ -14,7 +14,7 @@ const Nabver = () => {
     router.push("/login");
   };
   return (
-    <div className="top-0 sticky z-50 w-full">
+    <div className="top-0 sticky z-50 w-full mb-[-30px]">
       <div className="navbar bg-base-100  border-b   mx-auto">
         <div className="navbar-start">
           <div className="dropdown">

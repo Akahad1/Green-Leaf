@@ -91,3 +91,8 @@ export interface TPostvote {
   user: string;
   vote: string;
 }
+
+export interface TFollow {
+  userId: string;
+  followerId: string;
+}

@@ -197,7 +197,7 @@ const HomePostCard: React.FC<data> = ({ data, isLoading, currentUserId }) => {
                   <>
                     {" "}
                     <Image
-                      src="https://i0.wp.com/jiggambia.com/wp-content/uploads/2024/01/19e156dd3f2d29d0b5e8b081729abe9b.jpg?fit=400%2C400&ssl=1"
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStqtktl3g6wWkAzvUAi32yzYgb-jZ0-Pn0sQ&s"
                       alt="User profile"
                       className="w-10 h-10 rounded-full"
                       width={40}

@@ -22,12 +22,14 @@ import {
 } from "@/hooks/comment.hook";
 import { currentUser } from "@/Services/AuthService";
 import DropdownToggle from "@/components/ProfilePage/DropdownToggle/DropdownToggle";
+import { usePostVote } from "@/hooks/post.hook";
 
 interface data {
   data: TPostData;
   isLoading: boolean;
+  currentUserId: string;
 }
-const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
+const HomePostCard: React.FC<data> = ({ data, isLoading, currentUserId }) => {
   // const contentRef = useRef<HTMLDivElement>(null);
   const { mutate: addComment, isPending } = useAddComment();
   const [userId, setUserId] = useState("");
@@ -44,8 +46,7 @@ const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
   const [downvoted, setDownvoted] = useState(false);
 
   // Await the Promise here
-
-  // const [postvote] = usePostVoteMutation();
+  const { mutate: postvote } = usePostVote();
   const { mutate: deleteComment } = useDeleteComment();
 
   const handleOpenModal = (id: string) => {
@@ -54,46 +55,46 @@ const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
   };
   // console.log("post", comments);
 
-  // const handleUpvote = async (postId: string) => {
-  //   console.log("Post ID before API call:", postId);
+  const handleUpvote = async (postId: string) => {
+    console.log("Post ID before API call:", postId);
 
-  //   if (!postId) {
-  //     console.error("Post ID is missing before calling postvote");
-  //     return;
-  //   }
+    if (!postId) {
+      console.error("Post ID is missing before calling postvote");
+      return;
+    }
 
-  //   try {
-  //     const payload = {
-  //       id: postId,
-  //       user: user?._id,
-  //       vote: "upvote",
-  //     };
-  //     console.log("Payload to be sent to postvote:", payload);
+    try {
+      const payload = {
+        id: postId,
+        user: currentUserId,
+        vote: "upvote",
+      };
+      console.log("Payload to be sent to postvote:", payload);
 
-  //     // Call the API
-  //     const res = await postvote(payload);
-  //     console.log("API response:", res);
+      // Call the API
+      const res = await postvote(payload);
+      console.log("API response:", res);
 
-  //     setUpvoted(!upvoted); // Toggle upvote state
-  //     if (downvoted) setDownvoted(false); // If downvoted before, reset downvote
-  //   } catch (error) {
-  //     console.error("Error updating vote:", error);
-  //   }
-  // };
+      setUpvoted(!upvoted); // Toggle upvote state
+      if (downvoted) setDownvoted(false); // If downvoted before, reset downvote
+    } catch (error) {
+      console.error("Error updating vote:", error);
+    }
+  };
 
   // Handle downvote
-  // const handleDownvote = async (postId: string) => {
-  //   console.log(postId);
+  const handleDownvote = async (postId: string) => {
+    console.log(postId);
 
-  //   const res = await postvote({
-  //     id: postId,
-  //     user: user?._id,
-  //     vote: "downvote",
-  //   });
-  //   console.log(res);
-  //   setDownvoted(!downvoted);
-  //   if (upvoted) setUpvoted(false);
-  // };
+    const res = await postvote({
+      id: postId,
+      user: currentUserId,
+      vote: "downvote",
+    });
+    console.log(res);
+    setDownvoted(!downvoted);
+    if (upvoted) setUpvoted(false);
+  };
   const handleAddComment = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -242,7 +243,7 @@ const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
               <DropdownToggle
                 postid={item?._id}
                 userPostId={item.user?._id}
-                userId={userId}
+                userId={currentUserId}
                 currentCategory={item?.catagory}
                 currentImage={item?.image}
                 currentText={item?.text}
@@ -275,7 +276,7 @@ const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
             <div className="flex items-center space-x-2">
               {/* Upvote Button */}
               <button
-                // onClick={() => handleUpvote(item?._id)}
+                onClick={() => handleUpvote(item?._id)}
                 className={`flex items-center space-x-1 ${
                   upvoted
                     ? "text-blue-500"
@@ -288,7 +289,7 @@ const HomePostCard: React.FC<data> = ({ data, isLoading }) => {
 
               {/* Downvote Button */}
               <button
-                // onClick={() => handleDownvote(item?._id)}
+                onClick={() => handleDownvote(item?._id)}
                 className={`flex items-center space-x-1 ${
                   downvoted
                     ? "text-red-500"

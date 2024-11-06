@@ -30,7 +30,6 @@ const PostCard: React.FC<ProfileCommonPageProps> = ({ userId }) => {
 
   const { data: postData, isLoading } = useGetSpecificUserPost(userId);
 
-  // const [postvote] = usePostVoteMutation();
   const { mutate: postvote } = usePostVote();
   const { mutate: deletePost } = useDeleteComment();
   console.log("id", postid);

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { toast } from "sonner";
 import { ProfileCommonPageProps } from "../ProfileCommonPage/ProfileCommonPage";
 import { useAddUserInfo, useGetUser } from "@/hooks/user.hook";
+import PremiumButton from "../PremiumButton/PremiumButton";
 
 // import PremiumButton from "../PremiumButton/PremiumButton";
 
@@ -105,10 +106,10 @@ const ProfileInfo: React.FC<ProfileCommonPageProps> = ({ userId }) => {
           <h2 className="text-xl font-bold">Bio</h2>
           <p className="text-gray-700">{userData?.data.details}</p>
         </div>
-        {/* <PremiumButton
+        <PremiumButton
           email={userData?.data?.email}
           userId={userData?.data?._id}
-        ></PremiumButton> */}
+        ></PremiumButton>
       </div>
 
       {/* Stats and Action Buttons */}

@@ -4,13 +4,14 @@ import React, { useState } from "react";
 import SearchFilter from "../Filtering/Filterring";
 import HomePostCard from "../HomePostCartd/HomePostCartd";
 import { useGetAllPost } from "@/hooks/post.hook";
+import { ProfileCommonPageProps } from "@/components/ProfilePage/ProfileCommonPage/ProfileCommonPage";
 
 interface FilterParams {
   name?: string;
   value?: string;
   // Add any other filter parameters here
 }
-const CommonPage = () => {
+const CommonPage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   const [catagoryParam, setCatagoryParm] = useState<string>("");
   const [searchParam, setSearchParm] = useState<string>("");
 
@@ -30,7 +31,11 @@ const CommonPage = () => {
           setParm={setCatagoryParm}
           setSearchParm={setSearchParm}
         ></SearchFilter>
-        <HomePostCard data={CategoryData} isLoading={isLoading}></HomePostCard>
+        <HomePostCard
+          currentUserId={userId}
+          data={CategoryData}
+          isLoading={isLoading}
+        ></HomePostCard>
       </div>
     </div>
   );

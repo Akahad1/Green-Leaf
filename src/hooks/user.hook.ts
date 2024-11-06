@@ -1,5 +1,6 @@
 import {
   FollowUser,
+  getAllUser,
   getUser,
   updateUserCoverImage,
   updateUserImage,
@@ -13,6 +14,12 @@ export const useGetUser = (userId: string) => {
   return useQuery({
     queryKey: ["user", userId],
     queryFn: async () => await getUser(userId),
+  });
+};
+export const useGetAllUser = () => {
+  return useQuery({
+    queryKey: ["user"],
+    queryFn: async () => await getAllUser(),
   });
 };
 export const useAddProfileImage = () => {

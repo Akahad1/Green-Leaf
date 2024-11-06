@@ -1,14 +1,10 @@
+// Make sure to await params if you're using dynamic route params
 import UserProfilePages from "@/components/userProfileComponent/UserProfilePages/UserProfilePages";
-import React from "react";
 
-interface Params {
-  params: {
-    userId: string;
-  };
-}
+const pages = async ({ params }: { params: any }) => {
+  // Await the params before using its properties
+  const { userId } = params;
 
-const pages: React.FC<Params> = async ({ params }) => {
-  const { userId } = await params;
   return (
     <div>
       <UserProfilePages UserId={userId}></UserProfilePages>

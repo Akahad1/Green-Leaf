@@ -12,6 +12,15 @@ export const getUser = async (UserId: string): Promise<any> => {
     throw new Error(err.message);
   }
 };
+export const getAllUser = async () => {
+  try {
+    const { data } = await AxiosInstance.get(`/user`);
+
+    return data;
+  } catch (err: any) {
+    throw new Error(err.message);
+  }
+};
 export const updateUserImage = async (
   profileInfo: profileImage
 ): Promise<any> => {

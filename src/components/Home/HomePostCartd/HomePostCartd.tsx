@@ -168,9 +168,9 @@ const HomePostCard: React.FC<data> = ({ data, isLoading, currentUserId }) => {
       </div>
     );
   }
-  if (comentLoader) {
-    return <CardLoder></CardLoder>;
-  }
+  // if (comentLoader) {
+  //   return <CardLoder></CardLoder>;
+  // }
   return (
     <div>
       {data?.data?.map((item: TPost) => (

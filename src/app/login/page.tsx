@@ -1,9 +1,7 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { FormEvent, useEffect } from "react";
-import { toast } from "sonner";
-// import { signIn } from "next-auth/react";
 
 import Link from "next/link";
 import { useUserLogin } from "@/hooks/auth.hook";
@@ -27,18 +25,14 @@ const LoginPage = () => {
     handleUserLogIn(userInfo);
     setIsLoading(true);
   };
-  const searchParam = useSearchParams();
-  const pathname = searchParam.get("redirect");
-  console.log(pathname);
+  // const searchParam = useSearchParams();
+  // const pathname = searchParam.get("redirect");
+
   useEffect(() => {
     if (!isPending && isSuccess) {
-      if (pathname) {
-        route.push(pathname); // Navigate to the saved path
-      } else {
-        route.push("/"); // Navigate to the home page
-      }
+      route.push("/"); // Navigate to the home page
     }
-  }, [isPending, isSuccess, pathname, route]);
+  }, [isPending, isSuccess, route]);
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">

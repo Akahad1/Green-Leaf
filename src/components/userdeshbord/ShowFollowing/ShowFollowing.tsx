@@ -1,10 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 
-import ShowFollowData from "./ShowFollowData";
-import { ProfileCommonPageProps } from "../ProfileCommonPage/ProfileCommonPage";
+import MYAllFolloweing from "./MyAllFollwing";
+import { ProfileCommonPageProps } from "@/components/ProfilePage/ProfileCommonPage/ProfileCommonPage";
 import { useGetUser } from "@/hooks/user.hook";
 import axios from "axios";
+import CardLoder from "@/components/Loader/CardLoder/CardLoder";
 
 type User = {
   data: {
@@ -28,9 +29,9 @@ type User = {
   success: boolean;
 };
 
-const FollowersList: React.FC<ProfileCommonPageProps> = ({ userId }) => {
+const ShowFollowing: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   const { data: userData, isLoading } = useGetUser(userId);
-  const userids = userData?.data?.followers;
+  const userids = userData?.data?.followed;
 
   const [fetchedUserData, setFetchedUserData] = useState<User[]>([]);
 
@@ -39,9 +40,7 @@ const FollowersList: React.FC<ProfileCommonPageProps> = ({ userId }) => {
 
     for (const userId of userIds) {
       try {
-        const response = await axios.get(
-          `https://green-leaf-server-site.vercel.app/api/a6/user/${userId}`
-        ); // Replace with axios.get
+        const response = await axios.get(`/user/${userId}`);
         userDataArray.push(response.data as User);
       } catch (error) {
         console.error(`Error fetching data for user ID ${userId}:`, error);
@@ -53,28 +52,35 @@ const FollowersList: React.FC<ProfileCommonPageProps> = ({ userId }) => {
 
   useEffect(() => {
     if (userids) {
-      const getUserData = async () => {
-        const data: User[] = await fetchUserData(userids);
-        setFetchedUserData(data);
-        console.log("Fetched data:", data);
-      };
+      if (typeof window !== "undefined") {
+        const getUserData = async () => {
+          const data: User[] = await fetchUserData(userids);
+          setFetchedUserData(data);
+          console.log("Fetched data:", data);
+        };
 
-      getUserData();
+        getUserData();
+      }
     }
   }, [userids]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <CardLoder></CardLoder>
+      </div>
+    );
 
   return (
     <div>
-      <div className="text-2xl mt-3 mb-4">My Follower</div>
-      <div className="grid grid-cols-2 gap-4">
-        {fetchedUserData.map((item, index) => (
-          <ShowFollowData key={index} item={item} />
+      <div className="text-2xl mt-3 mb-4 ml-6">My Followering</div>
+      <div className="grid grid-cols-2 gap-4 ml-6 justify-center">
+        {fetchedUserData.map((item) => (
+          <MYAllFolloweing key={item.data.email} item={item}></MYAllFolloweing>
         ))}
       </div>
     </div>
   );
 };
 
-export default FollowersList;
+export default ShowFollowing;

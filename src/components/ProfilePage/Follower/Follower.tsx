@@ -5,6 +5,7 @@ import ShowFollowData from "./ShowFollowData";
 import { ProfileCommonPageProps } from "../ProfileCommonPage/ProfileCommonPage";
 import { useGetUser } from "@/hooks/user.hook";
 import axios from "axios";
+import AxiosInstance from "@/lib/AuthInstanse";
 
 type User = {
   data: {
@@ -38,14 +39,8 @@ const FollowersList: React.FC<ProfileCommonPageProps> = ({ userId }) => {
     const userDataArray: User[] = [];
 
     for (const userId of userIds) {
-      try {
-        const response = await axios.get(
-          `https://green-leaf-server-site.vercel.app/api/a6/user/${userId}`
-        ); // Replace with axios.get
-        userDataArray.push(response.data as User);
-      } catch (error) {
-        console.error(`Error fetching data for user ID ${userId}:`, error);
-      }
+      const response = await AxiosInstance.get(`/user/${userId}`); // Replace with axios.get
+      userDataArray.push(response.data as User);
     }
 
     return userDataArray;
@@ -64,7 +59,7 @@ const FollowersList: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   }, [userids]);
 
   if (isLoading) return <div>Loading...</div>;
-
+  console.log("fetcheUserdata", fetchUserData);
   return (
     <div>
       <div className="text-2xl mt-3 mb-4">My Follower</div>

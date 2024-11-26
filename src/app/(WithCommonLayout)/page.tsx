@@ -4,6 +4,7 @@ import React from "react";
 
 const page = async () => {
   const user = await currentUser();
+
   return (
     <div>
       <CommonPage userId={user?._id}></CommonPage>

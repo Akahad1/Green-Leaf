@@ -34,12 +34,7 @@ export const updatePost = async (updateData: updateInfo) => {
   try {
     const { data } = await AxiosInstance.put(
       `/post/${updateData.postid}`,
-      updateData.data,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+      updateData.data
     );
     return data;
   } catch (err: any) {
@@ -51,12 +46,7 @@ export const Postvote = async (postVotedata: TPostvote) => {
   try {
     const { data } = await AxiosInstance.put(
       `/post/${postVotedata.id}`,
-      postVotedata,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+      postVotedata
     );
     return data;
   } catch (err: any) {
@@ -64,12 +54,9 @@ export const Postvote = async (postVotedata: TPostvote) => {
   }
 };
 export const createPost = async (postData: FieldValues) => {
+  console.log("interner", postData);
   try {
-    const { data } = await AxiosInstance.post(`/post/createPost`, postData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const { data } = await AxiosInstance.post(`/post/createPost`, postData);
     return data;
   } catch (err: any) {
     throw new Error(err.message);

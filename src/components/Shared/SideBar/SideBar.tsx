@@ -2,52 +2,115 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { FiMenu, FiX } from "react-icons/fi";
+
+import DeshbordNavber from "../DeshbordNavber/DeshbordNavber";
+import { MdOutlineSpaceDashboard } from "react-icons/md";
+import { RiPagesLine } from "react-icons/ri";
+import { FaAngleDown, FaChevronUp, FaUser } from "react-icons/fa";
+import { CiLock } from "react-icons/ci";
+import { BsPostcard } from "react-icons/bs";
+import { LuUsers } from "react-icons/lu";
+import DashbordSideNavber from "../DashbordSideNavber/DashbordSideNavber";
+
 export interface TRProps {
-  role: string;
+  user: {
+    role: string;
+    _id: string;
+  };
   children: React.ReactNode; // or whatever type userId should be
 }
 
-const Sidebar: React.FC<TRProps> = ({ children, role }) => {
+const Sidebar: React.FC<TRProps> = ({ children, user }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
+  const [isPages, setIsPages] = useState(false);
+
+  // Toggle function for handling the opening/closing of the p tags
+  const toggleParagraphs = () => {
+    setIsPages(!isPages);
+  };
+  const [isAuthorization, setIsAuthorization] = useState(false);
+
+  const toggleAuthorization = () => {
+    setIsAuthorization(!isAuthorization);
+  };
+
+  const [activeLink, setActiveLink] = useState<number | null>(null);
+
+  const handleClick = (index: number) => {
+    setActiveLink(index); // Set the clicked link as active
+  };
   return (
-    <div className="flex container mx-auto mt-6">
+    <div className="flex   pt-6 mt-[-15px] h-full">
       {/* Sidebar for desktop */}
-      <div className="hidden md:flex flex-col w-64 lg:min-h-screen bg-blue-600 text-white p-4">
+      <div className="hidden md:flex lg:fixed lg:min-h-screen flex-col w-64 bg-white p-4 overflow-y-scroll">
         <nav className="space-y-4">
-          {role === "user" ? (
+          {user?.role === "user" ? (
             <>
-              <Link href="/deshbord/myContent">
-                <li className="block text-white hover:bg-blue-700 px-3 py-2 rounded-md">
-                  My Content
-                </li>
-              </Link>
-              <Link href="/deshbord/myFollower">
-                <li className="block text-white hover:bg-blue-700 px-3 py-2 rounded-md">
-                  My Followers
-                </li>
-              </Link>
-              <Link href="/deshbord/myFollowing">
-                <li className="block text-white hover:bg-blue-700 px-3 py-2 rounded-md">
-                  My Following
-                </li>
-              </Link>
+              <button className="btn btn-ghost text-xl mb-3">Green Leaf</button>
+
+              <DashbordSideNavber></DashbordSideNavber>
+
+              {/* user */}
+              <div className=" cursor-pointer block hover:text-blue-700 ml-3 rounded-md">
+                <FaUser size={24} className="inline mr-2 " />
+                Users
+              </div>
+
+              <div className="ml-5">
+                <Link href="/deshbord/myContent">
+                  <li
+                    onClick={() => handleClick(2)}
+                    className={`cursor-pointer ${
+                      activeLink === 2
+                        ? "block  text-blue-700 px-3 py-2 rounded-md"
+                        : "block  px-3 py-2 rounded-md"
+                    } hover:text-blue-700`}
+                  >
+                    <BsPostcard size={24} className="inline mr-2 " />
+                    My Content
+                  </li>
+                </Link>
+                <Link href="/deshbord/myFollower">
+                  <li
+                    onClick={() => handleClick(3)}
+                    className={`cursor-pointer ${
+                      activeLink === 3
+                        ? "block  text-blue-700 px-3 py-2 rounded-md"
+                        : "block  px-3 py-2 rounded-md"
+                    } hover:text-blue-700`}
+                  >
+                    <LuUsers size={24} className="inline mr-2 " /> My Followers
+                  </li>
+                </Link>
+
+                <Link href="/deshbord/myFollowing">
+                  <li
+                    onClick={() => handleClick(4)}
+                    className={`cursor-pointer ${
+                      activeLink === 4
+                        ? "block  text-blue-700 px-3 py-2 rounded-md"
+                        : "block  px-3 py-2 rounded-md"
+                    } hover:text-blue-700`}
+                  >
+                    <LuUsers size={24} className="inline mr-2 " /> My Following
+                  </li>
+                </Link>
+              </div>
             </>
           ) : (
             <>
               <Link href="/deshbord/allUser">
-                <li className="block text-white hover:bg-blue-700 px-3 py-2 rounded-md">
+                <li className="block  hover:bg-blue-700 px-3 py-2 rounded-md">
                   All User
                 </li>
               </Link>
-
               <Link href="/deshbord/activiy">
-                <li className="block text-white hover:bg-blue-700 px-3 py-2 rounded-md">
+                <li className="block  hover:bg-blue-700 px-3 py-2 rounded-md">
                   Activiy
                 </li>
               </Link>
@@ -58,23 +121,32 @@ const Sidebar: React.FC<TRProps> = ({ children, role }) => {
 
       {/* Mobile Sidebar */}
       <div className="md:hidden  lg:hidden ">
-        <button className=" p-2 inline h-24" onClick={toggleSidebar}>
+        {/* <button className=" p-2 inline h-24" onClick={toggleSidebar}>
           {isOpen ? <FiX size={14} /> : <FiMenu size={14} />}
-        </button>
+        </button> */}
 
         <div
-          className={`fixed inset-y-0 left-0 z-50 w-64 bg-blue-600 text-white transform ${
+          className={`fixed inset-y-0 left-0 z-50 w-64 bg-white transform ${
             isOpen ? "translate-x-0" : "-translate-x-full"
           } transition-transform duration-300 ease-in-out`}
         >
           <div className="p-4">
-            <nav className="space-y-4">
-              {role === "user" ? (
+            <nav className="space-y-4 mt-20">
+              {user?.role === "user" ? (
                 <>
+                  <Link href="/deshbord">
+                    <li
+                      onClick={toggleSidebar}
+                      className="block  hover:bg-blue-700 px-3 py-2 rounded-md"
+                    >
+                      <MdOutlineSpaceDashboard />
+                      Dashboard
+                    </li>
+                  </Link>
                   <Link href="/deshbord/myContent">
                     <li
                       onClick={toggleSidebar}
-                      className="block text-white hover:bg-blue-700 px-3 py-2 rounded-md"
+                      className="block  hover:bg-blue-700 px-3 py-2 rounded-md"
                     >
                       My Content
                     </li>
@@ -82,7 +154,7 @@ const Sidebar: React.FC<TRProps> = ({ children, role }) => {
                   <Link href="/deshbord/myFollower">
                     <li
                       onClick={toggleSidebar}
-                      className="block text-white hover:bg-blue-700 px-3 py-2 rounded-md"
+                      className="block  hover:bg-blue-700 px-3 py-2 rounded-md"
                     >
                       My Followers
                     </li>
@@ -101,7 +173,7 @@ const Sidebar: React.FC<TRProps> = ({ children, role }) => {
                   <Link href="/deshbord/allUser">
                     <li
                       onClick={toggleSidebar}
-                      className="block text-white hover:bg-blue-700 px-3 py-2 rounded-md"
+                      className="block  hover:bg-blue-700 px-3 py-2 rounded-md"
                     >
                       All User
                     </li>
@@ -110,7 +182,7 @@ const Sidebar: React.FC<TRProps> = ({ children, role }) => {
                   <Link href="/deshbord/activiy">
                     <li
                       onClick={toggleSidebar}
-                      className="block text-white hover:bg-blue-700 px-3 py-2 rounded-md"
+                      className="block  hover:bg-blue-700 px-3 py-2 rounded-md"
                     >
                       Activiy
                     </li>
@@ -123,8 +195,16 @@ const Sidebar: React.FC<TRProps> = ({ children, role }) => {
       </div>
 
       {/* Main content */}
-      <main className=" w-full mt-10 lg:mr-0 mr-5 min-h-screen">
-        <div>{children}</div>
+      <main className=" w-full   min-h-screen ">
+        <DeshbordNavber
+          isOpen={isOpen}
+          toggleSidebar={toggleSidebar}
+          userId={user?._id}
+        ></DeshbordNavber>
+        <div className="bg-[#F8FAFC] ">
+          {" "}
+          <div>{children}</div>
+        </div>
 
         <p></p>
       </main>

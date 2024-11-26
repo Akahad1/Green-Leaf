@@ -1,4 +1,4 @@
-"use client"; // Ensure you're using the correct context for your application
+"use client";
 import React, { useState } from "react";
 import { loadStripe, Stripe } from "@stripe/stripe-js";
 

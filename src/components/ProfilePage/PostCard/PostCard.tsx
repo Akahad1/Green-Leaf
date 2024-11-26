@@ -34,13 +34,13 @@ const PostCard: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   const { mutate: deletePost } = useDeleteComment();
   console.log("id", postid);
   const { data: comments, isLoading: commentLoading } = useGetComment(postid);
-  if (commentLoading) {
-    return (
-      <div>
-        <CardLoder></CardLoder>
-      </div>
-    );
-  }
+  // if (commentLoading) {
+  //   return (
+  //     <div>
+  //       <CardLoder></CardLoder>
+  //     </div>
+  //   );
+  // }
 
   if (isLoading) {
     return (

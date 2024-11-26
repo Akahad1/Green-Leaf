@@ -49,17 +49,7 @@ The purpose of this platform is to provide a centralized space for gardening ent
 
 - Sonner
 
-## Usage
 
-Instructions or examples for using the project. Include screenshots or code snippets if applicable.
-export default {
-// other rules...
-parserOptions: {
-ecmaVersion: 'latest',
-sourceType: 'module',
-project: ['./tsconfig.json', './tsconfig.node.json'],
-tsconfigRootDir: \_\_dirname,
-},
 
 ```
 

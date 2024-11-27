@@ -2,40 +2,54 @@
 
 import { useFollowUser, useGetUser } from "@/hooks/user.hook";
 import { currentUser } from "@/Services/AuthService";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface UserProfileUserIds {
   UserId: string;
 }
 const UserProfileInfo: React.FC<UserProfileUserIds> = ({ UserId }) => {
   const [loggedInUserId, setloggedInUserId] = useState("");
-  const id = UserId;
-  const { data: userData, isLoading } = useGetUser(id);
-  const { mutate: toggleFollow, isPaused } = useFollowUser();
+  const [isFollowing, setIsFollowing] = useState(false);
 
-  const [isFollowing, setIsFollowing] = useState(
-    userData?.data?.followers.includes(loggedInUserId)
-  );
-  console.log("loggedInUserId", loggedInUserId);
-  if (isLoading) {
-    return <span>Loading..</span>;
-  }
-  const { data } = userData;
+  const { data: userData, isLoading } = useGetUser(UserId);
+  const { mutate: toggleFollow } = useFollowUser();
+
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      const user = await currentUser();
+      setloggedInUserId(user?._id || "");
+    };
+
+    fetchCurrentUser();
+  }, []);
+
+  useEffect(() => {
+    if (userData && loggedInUserId) {
+      const isUserFollowing = userData.data.followers.includes(loggedInUserId);
+      setIsFollowing(isUserFollowing);
+    }
+  }, [userData, loggedInUserId]);
+
   const handleFollowToggle = async () => {
-    const user = await currentUser();
+    if (!loggedInUserId) return;
 
-    setloggedInUserId(user?._id);
     try {
-      const res = toggleFollow({
+      await toggleFollow({
         userId: UserId,
         followerId: loggedInUserId,
       });
-      console.log(res);
-      setIsFollowing(!isFollowing);
+      setIsFollowing((prev) => !prev);
     } catch (error) {
-      console.error("Error following/unfollowing user:", error);
+      console.error("Error toggling follow:", error);
     }
   };
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  const { data } = userData;
+
   return (
     <div>
       <div className="p-6 pt-12 text-center lg:text-left mt-5">
@@ -80,11 +94,9 @@ const UserProfileInfo: React.FC<UserProfileUserIds> = ({ UserId }) => {
             <button
               className="btn btn-primary"
               onClick={handleFollowToggle}
-              //   disabled={isPaused}
+              disabled={!loggedInUserId}
             >
-              {userData?.data?.followers.includes(loggedInUserId)
-                ? "Unfollow"
-                : "Follow"}
+              {isFollowing ? "Unfollow" : "Follow"}
             </button>
           </div>
         </div>

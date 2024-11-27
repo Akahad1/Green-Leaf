@@ -39,7 +39,9 @@ const FollowersList: React.FC<ProfileCommonPageProps> = ({ userId }) => {
     const userDataArray: User[] = [];
 
     for (const userId of userIds) {
-      const response = await AxiosInstance.get(`/user/${userId}`); // Replace with axios.get
+      const response = await AxiosInstance.get(
+        `http://localhost:5000/api/a6/user/${userId}`
+      ); // Replace with axios.get
       userDataArray.push(response.data as User);
     }
 
@@ -63,10 +65,16 @@ const FollowersList: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   return (
     <div>
       <div className="text-2xl mt-3 mb-4">My Follower</div>
-      <div className="grid grid-cols-2 gap-4">
-        {fetchedUserData.map((item, index) => (
-          <ShowFollowData key={index} item={item} />
-        ))}
+      <div>
+        {fetchedUserData.length === 0 ? (
+          <p className="text-2xl text-red-500 mt-5 ">You have No Follower</p>
+        ) : (
+          <div className="grid grid-cols-2 gap-4">
+            {fetchedUserData.map((item, index) => (
+              <ShowFollowData key={index} item={item} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

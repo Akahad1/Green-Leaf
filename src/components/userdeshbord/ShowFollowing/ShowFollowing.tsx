@@ -32,6 +32,7 @@ type User = {
 const ShowFollowing: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   const { data: userData, isLoading } = useGetUser(userId);
   const userids = userData?.data?.followed;
+  console.log("userid", userids);
 
   const [fetchedUserData, setFetchedUserData] = useState<User[]>([]);
 
@@ -40,7 +41,9 @@ const ShowFollowing: React.FC<ProfileCommonPageProps> = ({ userId }) => {
 
     for (const userId of userIds) {
       try {
-        const response = await axios.get(`/user/${userId}`);
+        const response = await axios.get(
+          `http://localhost:5000/api/a6/user/${userId}`
+        );
         userDataArray.push(response.data as User);
       } catch (error) {
         console.error(`Error fetching data for user ID ${userId}:`, error);
@@ -72,11 +75,18 @@ const ShowFollowing: React.FC<ProfileCommonPageProps> = ({ userId }) => {
     );
 
   return (
-    <div>
-      <div className="text-2xl mt-3 mb-4 ml-6">My Followering</div>
-      <div className="grid grid-cols-2 gap-4 ml-6 justify-center">
+    <div className="min-h-screen">
+      <div className="text-2xl pt-10 mb-4 ml-6 text-center">My Followering</div>
+      {fetchedUserData.length === 0 ? (
+        <p className="text-2xl text-red-500 text-center ">
+          You have not created any Followering
+        </p>
+      ) : (
+        ""
+      )}
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 ml-12 mt-5 justify-center">
         {fetchedUserData.map((item) => (
-          <MYAllFolloweing key={item.data.email} item={item}></MYAllFolloweing>
+          <MYAllFolloweing key={item?.data.email} item={item}></MYAllFolloweing>
         ))}
       </div>
     </div>

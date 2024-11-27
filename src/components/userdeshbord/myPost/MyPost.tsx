@@ -34,13 +34,21 @@ const MyPost: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   console.log("allPost", allPost);
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center min-h-screen ">
       <div>
-        <div>
+        <div className="text-center text-2xl  pt-10 mb-10">My All Post</div>
+        {allPost?.data?.length === 0 ? (
+          <p className="text-2xl text-red-500 text-center ">
+            You have not created any posts
+          </p>
+        ) : (
+          ""
+        )}
+        <div className="grid lg:grid-cols-3 ml-5 md:grid-cols-2 grid-cols-1 lg:gap-5 md:gap-3 lg:mr-4 mr-5">
           {allPost?.data.map((item: TPost) => (
             <div
               key={item._id}
-              className="max-w-xl mt-5 bg-white shadow-md rounded-lg overflow-hidden mb-6"
+              className="max-w-xl mt-5   bg-white shadow-md rounded-lg overflow-hidden mb-6"
             >
               {/* Post Header */}
               <div className="flex justify-between items-center px-4 py-3">

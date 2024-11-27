@@ -5,13 +5,10 @@ import { FaAngleDown, FaChevronUp } from "react-icons/fa";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { RiPagesLine } from "react-icons/ri";
 
-const DashbordSideNavber = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
-
+interface TProps {
+  toggleSidebar?: () => void;
+}
+const DashbordSideNavber: React.FC<TProps> = ({ toggleSidebar }) => {
   const [isPages, setIsPages] = useState(false);
 
   // Toggle function for handling the opening/closing of the p tags
@@ -31,7 +28,7 @@ const DashbordSideNavber = () => {
   };
   return (
     <div>
-      <Link href="/deshbord">
+      <Link href="/deshbord" onClick={toggleSidebar}>
         <li
           onClick={() => handleClick(1)}
           className={`cursor-pointer ${

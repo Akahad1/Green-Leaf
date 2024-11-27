@@ -5,9 +5,8 @@ import Link from "next/link";
 
 import DeshbordNavber from "../DeshbordNavber/DeshbordNavber";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
-import { RiPagesLine } from "react-icons/ri";
-import { FaAngleDown, FaChevronUp, FaUser } from "react-icons/fa";
-import { CiLock } from "react-icons/ci";
+
+import { FaUser } from "react-icons/fa";
 import { BsPostcard } from "react-icons/bs";
 import { LuUsers } from "react-icons/lu";
 import DashbordSideNavber from "../DashbordSideNavber/DashbordSideNavber";
@@ -27,18 +26,6 @@ const Sidebar: React.FC<TRProps> = ({ children, user }) => {
     setIsOpen(!isOpen);
   };
 
-  const [isPages, setIsPages] = useState(false);
-
-  // Toggle function for handling the opening/closing of the p tags
-  const toggleParagraphs = () => {
-    setIsPages(!isPages);
-  };
-  const [isAuthorization, setIsAuthorization] = useState(false);
-
-  const toggleAuthorization = () => {
-    setIsAuthorization(!isAuthorization);
-  };
-
   const [activeLink, setActiveLink] = useState<number | null>(null);
 
   const handleClick = (index: number) => {
@@ -47,7 +34,7 @@ const Sidebar: React.FC<TRProps> = ({ children, user }) => {
   return (
     <div className="flex   pt-6 mt-[-15px] h-full">
       {/* Sidebar for desktop */}
-      <div className="hidden md:flex lg:fixed lg:min-h-screen flex-col w-64 bg-white p-4 overflow-y-scroll">
+      <div className="hidden md:flex  lg:min-h-screen flex-col w-64 bg-white p-4 ">
         <nav className="space-y-4">
           {user?.role === "user" ? (
             <>
@@ -134,39 +121,57 @@ const Sidebar: React.FC<TRProps> = ({ children, user }) => {
             <nav className="space-y-4 mt-20">
               {user?.role === "user" ? (
                 <>
-                  <Link href="/deshbord">
-                    <li
-                      onClick={toggleSidebar}
-                      className="block  hover:bg-blue-700 px-3 py-2 rounded-md"
-                    >
-                      <MdOutlineSpaceDashboard />
-                      Dashboard
-                    </li>
-                  </Link>
-                  <Link href="/deshbord/myContent">
-                    <li
-                      onClick={toggleSidebar}
-                      className="block  hover:bg-blue-700 px-3 py-2 rounded-md"
-                    >
-                      My Content
-                    </li>
-                  </Link>
-                  <Link href="/deshbord/myFollower">
-                    <li
-                      onClick={toggleSidebar}
-                      className="block  hover:bg-blue-700 px-3 py-2 rounded-md"
-                    >
-                      My Followers
-                    </li>
-                  </Link>
-                  <Link href="/deshbord/myFollowing">
-                    <li
-                      onClick={toggleSidebar}
-                      className="block text-white hover:bg-blue-700 px-3 py-2 rounded-md"
-                    >
-                      My Following
-                    </li>
-                  </Link>
+                  <DashbordSideNavber
+                    toggleSidebar={toggleSidebar}
+                  ></DashbordSideNavber>
+
+                  {/* user */}
+                  <div className=" cursor-pointer block hover:text-blue-700 ml-3 rounded-md">
+                    <FaUser size={24} className="inline mr-2 " />
+                    Users
+                  </div>
+                  <div className="ml-5">
+                    <Link href="/deshbord/myContent">
+                      <li
+                        onClick={toggleSidebar}
+                        className={`cursor-pointer ${
+                          activeLink === 2
+                            ? "block  text-blue-700 px-3 py-2 rounded-md"
+                            : "block  px-3 py-2 rounded-md"
+                        } hover:text-blue-700`}
+                      >
+                        <BsPostcard size={24} className="inline mr-2 " />
+                        My Content
+                      </li>
+                    </Link>
+                    <Link href="/deshbord/myFollower">
+                      <li
+                        onClick={toggleSidebar}
+                        className={`cursor-pointer ${
+                          activeLink === 3
+                            ? "block  text-blue-700 px-3 py-2 rounded-md"
+                            : "block  px-3 py-2 rounded-md"
+                        } hover:text-blue-700`}
+                      >
+                        <LuUsers size={24} className="inline mr-2 " /> My
+                        Followers
+                      </li>
+                    </Link>
+
+                    <Link href="/deshbord/myFollowing">
+                      <li
+                        onClick={toggleSidebar}
+                        className={`cursor-pointer ${
+                          activeLink === 4
+                            ? "block  text-blue-700 px-3 py-2 rounded-md"
+                            : "block  px-3 py-2 rounded-md"
+                        } hover:text-blue-700`}
+                      >
+                        <LuUsers size={24} className="inline mr-2 " /> My
+                        Following
+                      </li>
+                    </Link>
+                  </div>
                 </>
               ) : (
                 <>

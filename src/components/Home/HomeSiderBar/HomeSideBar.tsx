@@ -1,79 +1,123 @@
 "use client";
-
-import { useFollowUser, useGetAllUser } from "@/hooks/user.hook";
-import { TUser } from "@/types";
-import { currentUser } from "@/Services/AuthService"; // Replace with your auth utility
 import React, { useEffect, useState } from "react";
 
-export interface ProfileProps {
-  loggedInUserId?: string; // Optional prop in case you want to pass it down
+interface SearchFilterProps {
+  setParm: React.Dispatch<React.SetStateAction<string>>;
+  setSearchParm: React.Dispatch<React.SetStateAction<string>>;
+  Parm: string;
 }
 
-const HomeSidebar: React.FC<ProfileProps> = () => {
-  const [loggedInUserId, setLoggedInUserId] = useState<string | null>(null); // State to track logged-in user ID
-  const { data: users, isLoading } = useGetAllUser(); // Fetch all users
-  const { mutate: toggleFollow } = useFollowUser(); // Follow/Unfollow mutation
+const HomeSidebar: React.FC<SearchFilterProps> = ({
+  setParm,
+  setSearchParm,
+  Parm,
+}) => {
+  const [contentType, setContentType] = useState<string>("");
 
-  // Fetch the current user ID when the component mounts
-  useEffect(() => {
-    const fetchLoggedInUser = async () => {
-      const user = await currentUser();
-      setLoggedInUserId(user?._id || null);
-    };
-    fetchLoggedInUser();
-  }, [loggedInUserId]);
+  const categories = ["Vegetables", "Flowers", "Herbs", "Fruits"];
 
-  const handleFollowToggle = async (userId: string) => {
-    if (!loggedInUserId) return; // Ensure logged-in user ID is available
-
-    try {
-      await toggleFollow({
-        userId,
-        followerId: loggedInUserId,
-      });
-    } catch (error) {
-      console.error("Error toggling follow:", error);
-    }
+  // Update selected category
+  const handleCategoryChange = (category: string) => {
+    setParm(category);
   };
 
-  if (isLoading || !loggedInUserId) {
-    return <span>Loading...</span>; // Show loading state until user data and loggedInUserId are ready
-  }
+  // Update content type
+  const handleContentTypeChange = (type: string) => {
+    setContentType(type);
+  };
+
+  // Notify parent component of filter changes
 
   return (
-    <div className="hidden lg:block lg:col-span-3">
-      <div className="bg-white p-4 rounded-lg shadow-md">
-        <h2 className="text-lg font-semibold mb-4">Users</h2>
-        <ul className="space-y-4">
-          {users?.data?.map((user: TUser) => (
-            <li key={user._id} className="flex items-center justify-between">
-              {/* User Info */}
-              <div className="flex items-center space-x-4">
-                <img
-                  src={user.image || "/default-profile.png"}
-                  alt={`${user.name}'s profile`}
-                  className="w-10 h-10 rounded-full"
-                />
-                <div>
-                  <p className="text-sm font-medium">{user.name}</p>
-                </div>
-              </div>
-              {/* Follow/Unfollow Button */}
-              <button
-                onClick={() => handleFollowToggle(user._id)}
-                className={`px-4 py-2 text-sm rounded ${
-                  user.followers.includes(loggedInUserId)
-                    ? "bg-red-500 text-white"
-                    : "bg-blue-500 text-white"
-                }`}
-              >
-                {user?.followers.includes(loggedInUserId)
-                  ? "Unfollow"
-                  : "Follow"}
-              </button>
-            </li>
-          ))}
-        </ul>
+    <div className="p-4  lg:sticky top-20 rounded-lg shadow-md lg:border-slate-500 ">
+      <h2 className="text-2xl font-semibold mb-4">Filters</h2>
+      <h3 className="font-medium text-xl mb-3">Search</h3>
+      <input
+        type="text"
+        onChange={(e) => setSearchParm(e.target.value)}
+        placeholder="Search posts..."
+        className="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-black "
+      />
+      {/* Categories Section */}
+      <div className="mb-4">
+        <h3 className="font-semibold text-xl mb-2 mt-3">Categories</h3>
+        {categories.map((category) => (
+          <div key={category} className="flex items-center mb-2">
+            <input
+              type="radio"
+              id={`category-${category}`}
+              name="category" // Ensures only one can be selected
+              className="mr-2 "
+              value={category}
+              checked={Parm === category}
+              onChange={() => handleCategoryChange(category)}
+            />
+            <label htmlFor={`category-${category}`} className="text-lg">
+              {category}
+            </label>
+          </div>
+        ))}
+        <div className="flex items-center mb-2">
+          <input
+            type="radio"
+            id="all-categories"
+            name="category"
+            className="mr-2"
+            value=""
+            checked={Parm === ""}
+            onChange={() => handleCategoryChange("")} // Reset category filter
+          />
+          <label htmlFor="all-categories" className="text-lg">
+            All Categories
+          </label>
+        </div>
+      </div>
+
+      {/* Content Type Section */}
+      <div>
+        <h3 className=" font-semibold text-xl mb-2">Content Type</h3>
+        <div className="flex items-center mb-2">
+          <input
+            type="radio"
+            id="premium"
+            name="contentType"
+            className="mr-2"
+            value="true"
+            checked={contentType === "true"}
+            onChange={() => handleContentTypeChange("true")}
+          />
+          <label htmlFor="true" className="text-lg">
+            Premium
+          </label>
+        </div>
+        <div className="flex items-center mb-2">
+          <input
+            type="radio"
+            id="regular"
+            name="contentType"
+            className="mr-2"
+            value="false"
+            checked={contentType === "false"}
+            onChange={() => handleContentTypeChange("false")}
+          />
+          <label htmlFor="false" className="text-lg">
+            Regular
+          </label>
+        </div>
+        <div className="flex items-center mb-2">
+          <input
+            type="radio"
+            id="all"
+            name="contentType"
+            className="mr-2"
+            value=""
+            checked={contentType === ""}
+            onChange={() => handleContentTypeChange("")}
+          />
+          <label htmlFor="all" className="text-lg">
+            All
+          </label>
+        </div>
       </div>
     </div>
   );

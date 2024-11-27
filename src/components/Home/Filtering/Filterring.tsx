@@ -14,7 +14,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   setSearchParm,
 }) => {
   return (
-    <div className="flex space-x-4 items-center">
+    <div className="flex space-x-4 items-center lg:hidden ">
       <input
         type="text"
         onChange={(e) => setSearchParm(e.target.value)}

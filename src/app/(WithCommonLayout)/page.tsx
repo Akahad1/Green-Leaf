@@ -20,13 +20,8 @@ const page = async () => {
         </div>
 
         {/* Second Div - Spans 5 Columns */}
-        <div className="lg:col-span-5 lg:mr-10  ">
+        <div className="lg:col-span-9 lg:mr-10  ">
           <CommonPage userId={user?._id}></CommonPage>
-        </div>
-
-        {/* Last Div - Spans 3 Columns */}
-        <div className="hidden lg:block lg:col-span-3">
-          <HomeSidebar loggedInUserId={user?._id}></HomeSidebar>
         </div>
       </div>
     </div>

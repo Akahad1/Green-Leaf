@@ -16,9 +16,9 @@ export type TUser = {
   image: string;
   coverImage: string;
   passwordChange: boolean;
-  favourite: [string];
-  followers: [string];
-  followed: [string];
+  favourite: string[];
+  followers: string[];
+  followed: string[];
   verified: boolean;
 };
 export type User = {

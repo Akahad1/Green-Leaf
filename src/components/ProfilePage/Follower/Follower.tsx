@@ -39,7 +39,7 @@ const FollowersList: React.FC<ProfileCommonPageProps> = ({ userId }) => {
     const userDataArray: User[] = [];
 
     for (const userId of userIds) {
-      const response = await AxiosInstance.get(
+      const response = await axios.get(
         `http://localhost:5000/api/a6/user/${userId}`
       ); // Replace with axios.get
       userDataArray.push(response.data as User);

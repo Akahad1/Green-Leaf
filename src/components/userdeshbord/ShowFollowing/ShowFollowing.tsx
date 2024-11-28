@@ -6,6 +6,7 @@ import { ProfileCommonPageProps } from "@/components/ProfilePage/ProfileCommonPa
 import { useGetUser } from "@/hooks/user.hook";
 import axios from "axios";
 import CardLoder from "@/components/Loader/CardLoder/CardLoder";
+import Loader from "@/components/Loader/CommonLoader/CommonLoader";
 
 type User = {
   data: {
@@ -70,7 +71,7 @@ const ShowFollowing: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   if (isLoading)
     return (
       <div>
-        <CardLoder></CardLoder>
+        <Loader></Loader>
       </div>
     );
 

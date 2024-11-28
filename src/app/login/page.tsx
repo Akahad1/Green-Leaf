@@ -32,7 +32,7 @@ const LoginPage = () => {
 
   // Demo user data
   const demoUser = { email: "aksahad@gmail.com", password: "123456" };
-  const demoAdmin = { email: "ak23@gmail.com", password: "123456" };
+  const demoAdmin = { email: "skshkib@gmail.com", password: "123456" };
 
   // Auto-fill the form for demo users
   const fillDemoUser = (user: { email: string; password: string }) => {
@@ -86,7 +86,7 @@ const LoginPage = () => {
         <div className="text-center text-sm">
           <p>
             Don't have an account?{" "}
-            <Link href="/signup" className="text-blue-500 hover:underline">
+            <Link href="/singup" className="text-blue-500 hover:underline">
               Create one here
             </Link>
           </p>

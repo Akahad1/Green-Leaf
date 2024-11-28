@@ -1,6 +1,7 @@
 "use client";
-import React from "react";
-import { Line } from "react-chartjs-2"; // For graphs
+
+import React, { useEffect, useState } from "react";
+import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,6 +13,7 @@ import {
   Legend,
 } from "chart.js";
 import Link from "next/link";
+import axios from "axios";
 
 ChartJS.register(
   CategoryScale,
@@ -24,27 +26,61 @@ ChartJS.register(
 );
 
 const AdminDashboard = () => {
-  // Dummy data for graphs
-  const data = {
-    labels: ["January", "February", "March", "April", "May", "June"],
+  // State to store dynamic data
+  const [userData, setUserData] = useState([]);
+  const [postData, setPostData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch data dynamically
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const [userResponse, postResponse] = await Promise.all([
+          axios.get("http://localhost:5000/api/a6/user"),
+          axios.get("http://localhost:5000/api/a6/post"),
+        ]);
+
+        setUserData(userResponse.data.data);
+        setPostData(postResponse.data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Prepare dynamic data for graphs
+  const graphData = {
+    labels: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
     datasets: [
       {
-        label: "Payments",
-        data: [100, 200, 150, 300, 250, 400],
+        label: "Posts",
+        data: postData.slice(0, 12).map((_, i) => (i + 1) * 10), // Mock posts for 12 months
         borderColor: "rgba(75, 192, 192, 1)",
         backgroundColor: "rgba(75, 192, 192, 0.2)",
       },
       {
-        label: "Posts",
-        data: [50, 100, 80, 150, 120, 180],
+        label: "User Registrations",
+        data: userData.slice(0, 12).map((_, i) => (i + 1) * 15), // Mock users for 12 months
         borderColor: "rgba(153, 102, 255, 1)",
         backgroundColor: "rgba(153, 102, 255, 0.2)",
-      },
-      {
-        label: "User Activity",
-        data: [200, 180, 220, 250, 210, 300],
-        borderColor: "rgba(255, 159, 64, 1)",
-        backgroundColor: "rgba(255, 159, 64, 0.2)",
       },
     ],
   };
@@ -57,53 +93,87 @@ const AdminDashboard = () => {
       },
       title: {
         display: true,
-        text: "Monthly Activity Overview",
+        text: "Monthly Stats for the Year",
       },
     },
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <div className="text-gray-600 text-lg">Loading Dashboard...</div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gray-100 p-6 lg:mr-0 mr-7">
+    <div className="min-h-screen bg-gray-50 p-4">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="bg-white shadow-md lg:mt-[-50px] rounded-lg p-6 mb-6">
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+        {/* Dashboard Header */}
+        <div className="bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg rounded-lg p-6 text-white mb-6">
+          <h1 className="text-4xl font-bold mb-2">Admin Dashboard</h1>
+          <p className="text-lg">
+            Overview of platform statistics and insights
+          </p>
         </div>
 
-        {/* Control Panels */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          {/* Content Management */}
-          <div className="bg-white shadow-md rounded-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">Manage Content</h2>
-            <p>View, edit, or delete posts and content.</p>
-            <button className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md">
-              Go to Content
+        {/* Stat Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+          {/* Total Users */}
+          <div className="bg-white shadow-lg rounded-lg p-6">
+            <h2 className="text-gray-600 text-xl font-semibold">Total Users</h2>
+            <p className="text-3xl font-bold mt-2 text-blue-500">
+              {userData.length}
+            </p>
+            <Link href="/Deshbord/allUser">
+              <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">
+                View Users
+              </button>
+            </Link>
+          </div>
+
+          {/* Total Posts */}
+          <div className="bg-white shadow-lg rounded-lg p-6">
+            <h2 className="text-gray-600 text-xl font-semibold">Total Posts</h2>
+            <p className="text-3xl font-bold mt-2 text-purple-500">
+              {postData.length}
+            </p>
+            <button className="mt-4 bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded-md">
+              Manage Posts
             </button>
           </div>
 
-          {/* User Management */}
-          <div className="bg-white shadow-md rounded-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">Manage Users</h2>
-            <p>View and manage user accounts and activity.</p>
-            <button className="mt-4 bg-green-600 text-white py-2 px-4 rounded-md">
-              <Link href="/Deshbord/allUser"> Go to Users</Link>
+          {/* Active Users */}
+          <div className="bg-white shadow-lg rounded-lg p-6">
+            <h2 className="text-gray-600 text-xl font-semibold">
+              Active Users
+            </h2>
+            <p className="text-3xl font-bold mt-2 text-green-500">
+              {Math.floor(userData.length * 0.8)}
+            </p>
+            <button className="mt-4 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md">
+              View Activity
             </button>
           </div>
 
           {/* Payment History */}
-          <div className="bg-white shadow-md rounded-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">Payment History</h2>
-            <p>View payment history and manage subscriptions.</p>
-            <button className="mt-4 bg-purple-600 text-white py-2 px-4 rounded-md">
-              Go to Payments
+          <div className="bg-white shadow-lg rounded-lg p-6">
+            <h2 className="text-gray-600 text-xl font-semibold">
+              Monthly Revenue
+            </h2>
+            <p className="text-3xl font-bold mt-2 text-orange-500">$5,200</p>
+            <button className="mt-4 bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-md">
+              View Payments
             </button>
           </div>
         </div>
 
-        {/* Graphs */}
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-2xl font-semibold mb-4">Monthly Stats</h2>
-          <Line data={data} options={options} />
+        {/* Graphs Section */}
+        <div className="bg-white shadow-lg rounded-lg p-6">
+          <h2 className="text-2xl font-bold mb-4 text-gray-700">
+            Activity Overview
+          </h2>
+          <Line data={graphData} options={options} />
         </div>
       </div>
     </div>

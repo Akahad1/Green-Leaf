@@ -91,16 +91,41 @@ const Sidebar: React.FC<TRProps> = ({ children, user }) => {
             </>
           ) : (
             <>
-              <Link href="/deshbord/allUser">
-                <li className="block  hover:bg-blue-700 px-3 py-2 rounded-md">
-                  All User
-                </li>
-              </Link>
-              <Link href="/deshbord/activiy">
-                <li className="block  hover:bg-blue-700 px-3 py-2 rounded-md">
-                  Activiy
-                </li>
-              </Link>
+              <button className="btn btn-ghost text-xl mb-3">Green Leaf</button>
+              <DashbordSideNavber></DashbordSideNavber>
+              <div className=" cursor-pointer mb-5 block hover:text-blue-700 ml-3 rounded-md">
+                <FaUser size={24} className="inline mr-2 " />
+                Users
+              </div>
+
+              <div className="ml-5">
+                <Link href="/deshbord/allUser">
+                  <li
+                    onClick={() => handleClick(9)}
+                    className={`cursor-pointer ${
+                      activeLink === 9
+                        ? "block  text-blue-700 px-3 py-2 rounded-md"
+                        : "block  px-3 py-2 rounded-md"
+                    } hover:text-blue-700`}
+                  >
+                    <LuUsers size={24} className="inline mr-2 " />
+                    My All User
+                  </li>
+                </Link>
+                <Link href="/deshbord/activiy">
+                  <li
+                    onClick={() => handleClick(10)}
+                    className={`cursor-pointer ${
+                      activeLink === 10
+                        ? "block  text-blue-700 px-3 py-2 rounded-md"
+                        : "block  px-3 py-2 rounded-md"
+                    } hover:text-blue-700`}
+                  >
+                    <BsPostcard size={24} className="inline mr-2 " />
+                    Activiy
+                  </li>
+                </Link>
+              </div>
             </>
           )}
         </nav>
@@ -175,12 +200,20 @@ const Sidebar: React.FC<TRProps> = ({ children, user }) => {
                 </>
               ) : (
                 <>
+                  <DashbordSideNavber
+                    toggleSidebar={toggleSidebar}
+                  ></DashbordSideNavber>
+
                   <Link href="/deshbord/allUser">
                     <li
                       onClick={toggleSidebar}
-                      className="block  hover:bg-blue-700 px-3 py-2 rounded-md"
+                      className={`cursor-pointer ${
+                        activeLink === 3
+                          ? "block  text-blue-700 px-3 py-2 rounded-md"
+                          : "block  px-3 py-2 rounded-md"
+                      } hover:text-blue-700`}
                     >
-                      All User
+                      <LuUsers size={24} className="inline mr-2 " /> My All User
                     </li>
                   </Link>
 

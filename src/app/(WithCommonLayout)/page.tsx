@@ -1,7 +1,5 @@
 import CommonPage from "@/components/Home/commonpage/CommonPage";
 import HomeProfileInfo from "@/components/Home/HomeProfileInfo/HomeProfileInfo";
-import HomeSidebar from "@/components/Home/HomeSiderBar/HomeSideBar";
-
 import { currentUser } from "@/Services/AuthService";
 import React from "react";
 
@@ -9,18 +7,18 @@ const page = async () => {
   const user = await currentUser();
 
   return (
-    <div>
-      <div className="grid lg:grid-cols-12 gap-5">
-        {/* First Div - Spans 4 Columns */}
-        <div className="lg:col-span-3 relative lg:mr-10 hidden lg:block">
-          <div className="bg-white lg:sticky top-10 rounded-lg shadow-md">
-            {/* Image */}
+    <div className="w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        {/* First Div - Sidebar on Large Screens */}
+        <div className="lg:col-span-3 hidden lg:block relative lg:mr-10">
+          <div className="bg-white lg:sticky top-20 rounded-lg shadow-md">
+            {/* Profile Info */}
             <HomeProfileInfo userId={user?._id}></HomeProfileInfo>
           </div>
         </div>
 
-        {/* Second Div - Spans 5 Columns */}
-        <div className="lg:col-span-9 lg:mr-10  ">
+        {/* Second Div - Main Content */}
+        <div className="col-span-1 lg:col-span-9 mr-2 ml-2">
           <CommonPage userId={user?._id}></CommonPage>
         </div>
       </div>

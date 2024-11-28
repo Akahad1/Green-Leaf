@@ -1,6 +1,4 @@
 "use client";
-/* eslint-disable @next/next/no-img-element */
-
 import React, { useState } from "react";
 import { Editor, EditorState, RichUtils } from "draft-js";
 import "draft-js/dist/Draft.css";
@@ -8,8 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { ProfileCommonPageProps } from "../ProfileCommonPage/ProfileCommonPage";
 import { useCreatePost } from "@/hooks/post.hook";
-
-// Helper function to convert editor state to raw text (serializing)
 
 const PostEditorModal: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   const { mutate: addPost, isSuccess } = useCreatePost();
@@ -19,26 +15,22 @@ const PostEditorModal: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   const [category, setCategory] = useState(""); // State for category
   const [isPremium, setIsPremium] = useState(false); // State for premium toggle
 
-  // Open modal when clicking "What's on your mind?"
   const openModal = () => {
     setIsModalOpen(true);
   };
 
-  // Close modal
   const closeModal = () => {
     setIsModalOpen(false);
-    setEditorState(EditorState.createEmpty()); // Reset editor state when closed
-    setImages([]); // Clear image previews when modal closes
-    setCategory(""); // Reset category
-    setIsPremium(false); // Reset premium toggle
+    setEditorState(EditorState.createEmpty());
+    setImages([]);
+    setCategory("");
+    setIsPremium(false);
   };
 
-  // Handle editor state changes
   const onChange = (newEditorState: EditorState) => {
     setEditorState(newEditorState);
   };
 
-  // Handle basic formatting commands (bold, italic, underline)
   const handleKeyCommand = (command: string, editorState: EditorState) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
@@ -48,45 +40,37 @@ const PostEditorModal: React.FC<ProfileCommonPageProps> = ({ userId }) => {
     return "not-handled";
   };
 
-  // Style toggling (Bold, Italic, Underline buttons)
   const toggleInlineStyle = (style: string) => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, style));
   };
 
-  // Handle image uploads
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setImages([...images, ...Array.from(e.target.files)]);
     }
   };
 
-  // Remove image
   const removeImage = (index: number) => {
     setImages(images.filter((_, i) => i !== index));
   };
 
-  // Handle form submission
   const handlePost = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent page reload on submit
-
+    e.preventDefault();
     const contentState = editorState.getCurrentContent();
     const postContent = contentState.getPlainText();
 
-    const formData = new FormData(); // Create a FormData object
-    formData.append("user", userId); // Add user ID
-    formData.append("text", postContent); // Add post text content
-    formData.append("catagory", category); // Add category
-    formData.append("premium", String(isPremium)); // Add premium flag (convert boolean to string)
+    const formData = new FormData();
+    formData.append("user", userId);
+    formData.append("text", postContent);
+    formData.append("catagory", category);
+    formData.append("premium", String(isPremium));
 
-    // Append images (if there are any)
     if (images.length > 0) {
-      formData.append("image", images[0]); // Add the first image (you can handle multiple images as well)
+      formData.append("image", images[0]);
     }
 
     try {
-      addPost(formData); // Pass FormData to Redux action
-      console.log("res", formData);
-
+      addPost(formData);
       closeModal();
     } catch (error) {
       console.log("Error:", error);
@@ -94,47 +78,46 @@ const PostEditorModal: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   };
 
   return (
-    <div className="relative ">
-      {/* Main "What's on your mind?" input box */}
+    <div className="relative">
       <div>
         <div className="w-12 mt-3 bg-gray-200"></div>
-        <div className="w-full max-w-lg flex p-4 rounded-lg shadow-lg lg:mr-20 cursor-pointer">
+        <div className="w-full max-w-lg flex p-4 rounded-lg shadow-xl bg-gradient-to-r  lg:mr-20 cursor-pointer hover:shadow-2xl transition-all">
           <Link href="/profile">
             <Image
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStqtktl3g6wWkAzvUAi32yzYgb-jZ0-Pn0sQ&s"
               alt="Profile Image"
               width={48}
               height={48}
-              className="rounded-full mr-6 lg:mr-16"
+              className="rounded-full mr-6 lg:mr-16 shadow-md"
             />
           </Link>
           <input
             onClick={openModal}
             type="text"
             placeholder="What's on your mind?"
-            className="border rounded-xl bg-slate-300 p-2 placeholder-black px-4 lg:w-96 w-full"
+            className="border rounded-xl bg-white bg-opacity-70 p-2 placeholder-gray-600 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all w-full lg:w-96"
           />
         </div>
       </div>
 
-      {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 lg:mx-0 p-5 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg max-w-2xl w-full md:max-w-4xl sm:w-full">
+        <div className="fixed inset-0 lg:mx-0 p-5 flex items-center justify-center bg-black bg-opacity-50 z-50 transition-all">
+          <div className="bg-white p-8 rounded-lg max-w-2xl w-full md:max-w-4xl sm:w-full shadow-lg">
             <form onSubmit={handlePost}>
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-semibold">Create Post</h3>
+                <h3 className="text-2xl font-semibold text-gray-700">
+                  Create Post
+                </h3>
                 <button
                   type="button"
-                  className="text-gray-600 text-2xl"
+                  className="text-gray-600 text-2xl hover:text-gray-800"
                   onClick={closeModal}
                 >
                   &times;
                 </button>
               </div>
 
-              {/* Post Content Editor */}
-              <div className="bg-gray-100 border border-gray-300 p-2 rounded-lg min-h-[150px]">
+              <div className="bg-gray-100 border border-gray-300 p-4 rounded-lg min-h-[150px] shadow-inner">
                 <Editor
                   editorState={editorState}
                   onChange={onChange}
@@ -143,49 +126,48 @@ const PostEditorModal: React.FC<ProfileCommonPageProps> = ({ userId }) => {
                 />
               </div>
 
-              {/* Style Buttons */}
-              <div className="mt-2 flex space-x-2">
+              <div className="mt-2 flex space-x-4">
                 <button
                   type="button"
-                  className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                  className="px-3 py-1 bg-gray-200 rounded-full hover:bg-gray-300 text-sm transition"
                   onClick={() => toggleInlineStyle("BOLD")}
                 >
                   Bold
                 </button>
                 <button
                   type="button"
-                  className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                  className="px-3 py-1 bg-gray-200 rounded-full hover:bg-gray-300 text-sm transition"
                   onClick={() => toggleInlineStyle("ITALIC")}
                 >
                   Italic
                 </button>
                 <button
                   type="button"
-                  className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                  className="px-3 py-1 bg-gray-200 rounded-full hover:bg-gray-300 text-sm transition"
                   onClick={() => toggleInlineStyle("UNDERLINE")}
                 >
                   Underline
                 </button>
               </div>
 
-              {/* Image Upload */}
               <div className="mt-4">
-                <label className="block text-gray-700">Attach Images:</label>
+                <label className="block text-gray-700 font-semibold">
+                  Attach Images:
+                </label>
                 <input
                   type="file"
                   accept="image/*"
                   multiple
                   onChange={handleImageUpload}
-                  className="mt-2"
+                  className="mt-2 w-full"
                 />
-                {/* Preview selected images */}
                 <div className="flex flex-wrap mt-4 space-x-4">
                   {images.map((image, index) => (
                     <div key={index} className="relative">
                       <img
                         src={URL.createObjectURL(image)}
                         alt="preview"
-                        className="w-24 h-24 object-cover rounded-lg"
+                        className="w-24 h-24 object-cover rounded-lg shadow-md"
                       />
                       <button
                         type="button"
@@ -199,26 +181,27 @@ const PostEditorModal: React.FC<ProfileCommonPageProps> = ({ userId }) => {
                 </div>
               </div>
 
-              {/* Category Selection */}
               <div className="mt-4">
-                <label className="block text-gray-700">Select Category:</label>
+                <label className="block text-gray-700 font-semibold">
+                  Select Category:
+                </label>
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="border border-gray-300 p-2 rounded-lg w-full"
+                  className="border border-gray-300 p-2 rounded-lg w-full bg-white shadow-md"
                   required
                 >
                   <option value="Fruits">Fruits</option>
                   <option value="Herbs">Herbs</option>
                   <option value="Flowers">Flowers</option>
                   <option value="Vegetables">Vegetables</option>
-                  {/* Add more categories as needed */}
                 </select>
               </div>
 
-              {/* Premium Toggle */}
               <div className="mt-4">
-                <label className="block text-gray-700">Premium Post:</label>
+                <label className="block text-gray-700 font-semibold">
+                  Premium Post:
+                </label>
                 <div className="flex items-center">
                   <input
                     type="checkbox"
@@ -226,15 +209,16 @@ const PostEditorModal: React.FC<ProfileCommonPageProps> = ({ userId }) => {
                     onChange={(e) => setIsPremium(e.target.checked)}
                     className="mr-2"
                   />
-                  <span>{isPremium ? "Premium" : "Regular"}</span>
+                  <span className="text-sm">
+                    {isPremium ? "Premium" : "Regular"}
+                  </span>
                 </div>
               </div>
 
-              {/* Post Button */}
               <div className="mt-6 text-right">
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
                 >
                   Post
                 </button>

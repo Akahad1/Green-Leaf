@@ -10,24 +10,20 @@ import { TPost } from "@/types";
 const AllImageGallery: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   const { data: AllPost, isLoading } = useGetSpecificUserPost(userId);
   if (isLoading) {
-    return <CardLoder></CardLoder>;
+    return <CardLoder />;
   }
-  console.log("allpost", AllPost);
+
   return (
-    <div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 ml-4 min-h-screen">
+    <div className="p-6 min-h-screen">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {AllPost?.data ? (
-          <>
-            {AllPost?.data.map((item: TPost) => (
-              <ImageCard key={item._id} item={item} />
-            ))}
-          </>
+          AllPost?.data.map((item: TPost) => (
+            <ImageCard key={item._id} item={item} />
+          ))
         ) : (
-          <>
-            <p className="text-xl lg:text-3xl text-center mt-10">
-              There are no Data{" "}
-            </p>
-          </>
+          <p className="text-2xl lg:text-3xl text-center text-gray-500 mt-10">
+            No posts found.
+          </p>
         )}
       </div>
     </div>

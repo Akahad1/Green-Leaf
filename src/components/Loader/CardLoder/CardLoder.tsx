@@ -4,7 +4,7 @@ import React from "react";
 const CardLoder = () => {
   return (
     <div>
-      <div className="max-w-xl mt-5 bg-white shadow-md rounded-lg overflow-hidden mb-6 animate-pulse">
+      <div className="max-w-xl w-96 mt-5 bg-white shadow-md rounded-lg overflow-hidden mb-6 animate-pulse ">
         {/* Post Header Loader */}
         <div className="flex justify-between items-center px-4 py-3">
           <div className="flex items-center">

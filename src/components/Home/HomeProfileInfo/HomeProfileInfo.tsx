@@ -35,11 +35,11 @@ const HomeProfileInfo: React.FC<ProfileCommonPageProps> = ({ userId }) => {
         {/* Cover Image */}
         {userData?.data?.coverImage ? (
           <Image
-            src={userData?.data.coverImage}
+            src={userData?.data.coverImage} // Default image if user image is not available
             alt="Cover Image"
-            width={1200}
-            height={300}
-            className="w-full h-60 object-cover rounded-t-lg"
+            width={1200} // You can set the width to a large value
+            height={675} // Standard aspect ratio of 16:9 (width:height)
+            className="w-full h-auto object-cover rounded-t-lg" // Ensures it scales properly and looks good
           />
         ) : (
           <Image
@@ -57,17 +57,17 @@ const HomeProfileInfo: React.FC<ProfileCommonPageProps> = ({ userId }) => {
             <Image
               src={userData?.data.image}
               alt="Profile Image"
-              width={128}
-              height={100}
-              className="rounded-full"
+              width={80} // Adjust this size based on your layout
+              height={80} // Make height the same as width for a circular image
+              className="rounded-full object-cover"
             />
           ) : (
             <Image
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStqtktl3g6wWkAzvUAi32yzYgb-jZ0-Pn0sQ&s"
               alt="Profile Image"
-              width={128}
-              height={128}
-              className="rounded-full"
+              width={80} // Adjust this size based on your layout
+              height={80} // Make height the same as width for a circular image
+              className="rounded-full object-cover"
             />
           )}
         </div>
@@ -75,7 +75,7 @@ const HomeProfileInfo: React.FC<ProfileCommonPageProps> = ({ userId }) => {
       <div className="p-6 pt-12 text-center lg:text-left mt-5">
         <div className="lg:flex lg:justify-between lg:items-center">
           <div>
-            <h1 className="text-3xl font-bold">
+            <h1 className="text-2xl font-semibold">
               {userData?.data.name}
               {userData?.data?.verified === true ? (
                 <span>

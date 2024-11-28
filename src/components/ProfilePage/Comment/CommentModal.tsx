@@ -27,7 +27,9 @@ const CommentModal: React.FC<ModalProps> = ({ children, onClose }) => {
         >
           &times;
         </button>
-        {children}
+
+        {/* Modal Content Area with Scroll */}
+        <div className="max-h-96 overflow-y-auto">{children}</div>
       </motion.div>
     </motion.div>
   );

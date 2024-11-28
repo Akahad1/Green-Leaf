@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect } from "react";
-
 import Link from "next/link";
 import { useUserLogin } from "@/hooks/auth.hook";
 import { useUser } from "@/context/user.provider";
@@ -11,101 +10,102 @@ const LoginPage = () => {
   const { mutate: handleUserLogIn, isPending, isSuccess } = useUserLogin();
   const route = useRouter();
   const { setIsLoading } = useUser();
+
+  // Handle form submission
   const logInHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
-
     const email = form.email.value;
-
     const password = form.password.value;
-    const userInfo = {
-      password,
-      email,
-    };
+
+    const userInfo = { email, password };
     handleUserLogIn(userInfo);
     setIsLoading(true);
   };
-  // const searchParam = useSearchParams();
-  // const pathname = searchParam.get("redirect");
 
+  // Handle redirect after successful login
   useEffect(() => {
     if (!isPending && isSuccess) {
       route.push("/"); // Navigate to the home page
     }
   }, [isPending, isSuccess, route]);
-  return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">Log In</h2>
 
-        <form className="space-y-4" onSubmit={logInHandler}>
+  // Demo user data
+  const demoUser = { email: "aksahad@gmail.com", password: "123456" };
+  const demoAdmin = { email: "ak23@gmail.com", password: "123456" };
+
+  // Auto-fill the form for demo users
+  const fillDemoUser = (user: { email: string; password: string }) => {
+    const emailInput = document.getElementById("email") as HTMLInputElement;
+    const passwordInput = document.getElementById(
+      "password"
+    ) as HTMLInputElement;
+
+    emailInput.value = user.email;
+    passwordInput.value = user.password;
+  };
+
+  return (
+    <div className="flex justify-center items-center min-h-screen ">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md space-y-6">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          Log In
+        </h2>
+
+        <form className="space-y-6" onSubmit={logInHandler}>
           {/* Email */}
           <input
+            id="email"
             type="email"
             name="email"
             placeholder="Email"
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
 
           {/* Password */}
           <input
+            id="password"
             type="password"
             name="password"
             placeholder="Password"
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
 
           {/* Submit Button */}
-          <div>
-            <p className="text-sm">
-              Please Create A{" "}
-              <Link className="text-blue-500" href="/singup">
-                New Accoutnt
-              </Link>
-            </p>
-          </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-2 rounded-md font-semibold hover:bg-blue-700 transition"
+            className="w-full bg-blue-600 text-white p-3 rounded-md font-semibold hover:bg-blue-700 transition duration-300"
           >
             Log In
           </button>
         </form>
 
-        {/* OAuth Buttons */}
-        <div className="mt-6 space-y-4">
-          {/* <button
-            onClick={() => {
-              signIn("google", { callbackUrl: "/" });
-            }}
-            className="w-full flex justify-center items-center bg-red-600 text-white p-2 rounded-md font-semibold hover:bg-red-700 transition"
+        {/* Links for registration */}
+        <div className="text-center text-sm">
+          <p>
+            Don't have an account?{" "}
+            <Link href="/signup" className="text-blue-500 hover:underline">
+              Create one here
+            </Link>
+          </p>
+        </div>
+
+        {/* Demo Buttons */}
+        <div className="space-y-4 mt-6">
+          <button
+            onClick={() => fillDemoUser(demoUser)}
+            className="w-full bg-green-500 text-white p-3 rounded-md font-semibold hover:bg-green-600 transition duration-300"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 48 48"
-              className="h-5 w-5 mr-2"
-            >
-              <path
-                fill="#4285F4"
-                d="M24 9.5c3.13 0 5.23 1.37 6.43 2.5l4.71-4.71C31.33 4.69 27.89 3 24 3 14.58 3 7 10.58 7 20s7.58 17 17 17c4.59 0 8.31-1.53 11.09-4.13l-4.71-4.71c-1.26 1.11-3.31 2.34-6.38 2.34-5.06 0-9.35-3.45-10.88-8.12H7.92V20H13c1.53-4.67 5.82-8.12 11-8.12z"
-              />
-              <path
-                fill="#34A853"
-                d="M7.92 14.4c-.61 1.84-.92 3.82-.92 5.6s.31 3.76.92 5.6V20H13c1.53-4.67 5.82-8.12 11-8.12V7c-6.52 0-12.06 3.75-14.08 9.4z"
-              />
-              <path
-                fill="#FBBC05"
-                d="M24 37c3.89 0 7.33-1.34 9.71-3.66l-4.71-4.71c-1.54 1.05-3.65 1.88-6.43 1.88-5.19 0-9.53-3.52-10.93-8.24H7.92v3.2C10.94 33.34 17.48 37 24 37z"
-              />
-              <path
-                fill="#EA4335"
-                d="M42 24c0-1.3-.11-2.53-.32-3.74H24v7.08h10.09c-.43 2.17-1.56 4.01-3.14 5.34l4.71 4.71C38.96 34.44 42 29.72 42 24z"
-              />
-            </svg>
-            Log In with Google
-          </button> */}
+            Demo User Login
+          </button>
+          <button
+            onClick={() => fillDemoUser(demoAdmin)}
+            className="w-full bg-red-500 text-white p-3 rounded-md font-semibold hover:bg-red-600 transition duration-300"
+          >
+            Demo Admin Login
+          </button>
         </div>
       </div>
     </div>

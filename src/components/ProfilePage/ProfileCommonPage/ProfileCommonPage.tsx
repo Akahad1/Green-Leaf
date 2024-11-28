@@ -12,7 +12,7 @@ export interface ProfileCommonPageProps {
 const ProfileCommonPage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   return (
     <div>
-      <div className="bg-gray-100   pt-10  p-6 mt-[-28px] ">
+      <div className="lg:bg-gray-100  w-full  pt-10  p-10 mt-[-28px] ">
         <div className=" bg-white rounded-lg shadow-md ">
           {/* Cover Image */}
           <ProfileImage userId={userId}></ProfileImage>
@@ -22,7 +22,7 @@ const ProfileCommonPage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
         </div>
       </div>
 
-      <div className="container  lg:grid lg:grid-cols-12 lg:p-10 pt-10  relative w-full  bg-gray-100 ">
+      <div className="container  lg:grid lg:grid-cols-12 lg:p-10 pt-10  relative w-full  lg:bg-gray-100 ">
         <div className="lg:col-span-5 hidden w-full lg:static lg:flex h-32 top-64 mt-10 left-10 p-6   ml-16">
           <FollowersList userId={userId}></FollowersList>
         </div>

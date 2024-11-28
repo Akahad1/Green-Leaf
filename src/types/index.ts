@@ -62,7 +62,7 @@ export type TPostData = {
 };
 export type Tcommet = {
   _id: string;
-  user: TUser;
+  user: string;
   post: TPost;
   text: string;
 };

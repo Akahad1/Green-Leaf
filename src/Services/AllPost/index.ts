@@ -4,10 +4,14 @@ import AxiosInstance from "@/lib/AuthInstanse";
 import { TPostvote, updateInfo } from "@/types";
 import { FieldValues } from "react-hook-form";
 
-export const getAllPost = async (catagory: string, searchParam: string) => {
+export const getAllPost = async (
+  catagory: string,
+  searchParam: string,
+  premiumParam: string
+) => {
   try {
     const { data } = await AxiosInstance.get(
-      `/post?catagory=${catagory}&search=${searchParam}`
+      `/post?catagory=${catagory}&search=${searchParam}&premium=${premiumParam}`
     );
     return data;
   } catch (err: any) {

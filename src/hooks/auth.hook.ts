@@ -24,7 +24,7 @@ export const useUserLogin = () => {
       toast.success("User login successfully");
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error("Something went wrong!");
     },
   });
 };

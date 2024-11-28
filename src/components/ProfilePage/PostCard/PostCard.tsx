@@ -277,10 +277,10 @@ const PostCard: React.FC<ProfileCommonPageProps> = ({ userId }) => {
                       className="flex space-x-4 p-4 bg-gray-50 rounded-lg shadow-sm"
                     >
                       {/* Profile Image */}
-                      {comment?.user?.image ? (
+                      {comment?.user ? (
                         <Image
                           className="rounded-full"
-                          src={comment?.user.image}
+                          src="https://i0.wp.com/jiggambia.com/wp-content/uploads/2024/01/19e156dd3f2d29d0b5e8b081729abe9b.jpg?fit=400%2C400&ssl=1"
                           height={40}
                           width={40}
                           alt="user profile image"

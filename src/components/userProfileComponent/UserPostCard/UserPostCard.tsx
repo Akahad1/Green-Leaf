@@ -258,10 +258,10 @@ const UserPostCard: React.FC<UserProfileUserId> = ({ UserId }) => {
                       className="flex space-x-4 p-4 bg-gray-50 rounded-lg shadow-sm"
                     >
                       {/* Profile Image */}
-                      {comment?.user?.image ? (
+                      {comment?.user ? (
                         <Image
                           className="rounded-full"
-                          src={comment?.user.image}
+                          src="https://i0.wp.com/jiggambia.com/wp-content/uploads/2024/01/19e156dd3f2d29d0b5e8b081729abe9b.jpg?fit=400%2C400&ssl=1"
                           height={40}
                           width={40}
                           alt="user profile image"
@@ -281,17 +281,21 @@ const UserPostCard: React.FC<UserProfileUserId> = ({ UserId }) => {
                       </div>
 
                       {/* Edit and Delete Buttons */}
-                      <div className="flex space-x-2">
-                        <button className="text-blue-500 text-sm hover:underline">
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => deleteComment(comment?._id)}
-                          className="text-red-500 text-sm hover:underline"
-                        >
-                          Delete
-                        </button>
-                      </div>
+                      {UserId === comment?.user ? (
+                        <div className="flex space-x-2">
+                          <button className="text-blue-500 text-sm hover:underline">
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => deleteComment(comment?._id)}
+                            className="text-red-500 text-sm hover:underline"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      ) : (
+                        <></>
+                      )}
                     </div>
                   ))}
                 </div>

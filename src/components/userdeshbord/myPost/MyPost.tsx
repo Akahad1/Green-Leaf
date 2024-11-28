@@ -156,49 +156,86 @@ const MyPost: React.FC<ProfileCommonPageProps> = ({ userId }) => {
               {/* Comments Modal */}
               {showModal && (
                 <CommentModal onClose={() => setShowModal(false)}>
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold mb-4">Comments</h3>
+                  <div className="p-6 w-full max-w-lg bg-white rounded-lg shadow-lg">
+                    {/* Modal Header */}
+                    <div className="flex justify-between items-center mb-4">
+                      <h3 className="text-2xl font-semibold text-gray-800">
+                        Comments
+                      </h3>
+                      <button
+                        onClick={() => setShowModal(false)}
+                        className="text-2xl text-gray-600 hover:text-gray-800 font-bold"
+                      >
+                        &times;
+                      </button>
+                    </div>
 
-                    {/* List of comments */}
-                    {comments?.data.map((comment: Tcommet) => (
-                      <div key={comment._id} className="mb-4">
-                        <div className="flex justify-between items-center">
-                          <Image
-                            className="rounded-full mr-3"
-                            src={comment?.user.image}
-                            height={40}
-                            width={40}
-                            alt="img"
-                          ></Image>
-                          <p className="text-gray-700 text-sm">
-                            {comment.text}
-                          </p>
+                    {/* Comments List */}
+                    <div className="space-y-6">
+                      {comments?.data.map((comment: Tcommet) => (
+                        <div
+                          key={comment?._id}
+                          className="flex space-x-4 p-4 bg-gray-50 rounded-lg shadow-sm"
+                        >
+                          {/* Profile Image */}
+                          {comment?.user ? (
+                            <Image
+                              className="rounded-full"
+                              src="https://i0.wp.com/jiggambia.com/wp-content/uploads/2024/01/19e156dd3f2d29d0b5e8b081729abe9b.jpg?fit=400%2C400&ssl=1"
+                              height={40}
+                              width={40}
+                              alt="user profile image"
+                            />
+                          ) : (
+                            <Image
+                              className="rounded-full"
+                              src="https://i0.wp.com/jiggambia.com/wp-content/uploads/2024/01/19e156dd3f2d29d0b5e8b081729abe9b.jpg?fit=400%2C400&ssl=1"
+                              height={40}
+                              width={40}
+                              alt="default profile image"
+                            />
+                          )}
+
+                          <div className="flex-1">
+                            <p className="text-gray-800 text-sm">
+                              {comment.text}
+                            </p>
+                          </div>
+
+                          {/* Edit and Delete Buttons */}
                           <div className="flex space-x-2">
-                            <button className="text-sm text-blue-500 hover:underline">
+                            <button className="text-blue-500 text-sm hover:underline">
                               Edit
                             </button>
-                            <button className="text-sm text-red-500 hover:underline">
+                            <button
+                              // onClick={() => deleteComment(comment?._id)}
+                              className="text-red-500 text-sm hover:underline"
+                            >
                               Delete
                             </button>
                           </div>
                         </div>
-                        <div className="divider"></div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
 
-                    {/* Add new comment */}
-                    <div className="mt-4">
-                      <form>
-                        <input
-                          type="text"
+                    {/* No Comments Message */}
+                    {comments?.data.length === 0 && (
+                      <div className="p-4 text-center text-gray-500">
+                        No comments available. Be the first to comment!
+                      </div>
+                    )}
+
+                    {/* Comment Input Form */}
+                    <div className="mt-6">
+                      <form className="flex flex-col">
+                        <textarea
                           name="text"
-                          id=""
                           placeholder="Write a comment..."
-                          className="block p-3 rounded-xl"
+                          className="block w-full p-4 mt-2 mb-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
                         />
                         <button
                           type="submit"
-                          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                          className="self-end px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                           Post Comment
                         </button>

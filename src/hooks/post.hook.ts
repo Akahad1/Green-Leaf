@@ -12,10 +12,14 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
-export const useGetAllPost = (catagory: string, searchParam: string) => {
+export const useGetAllPost = (
+  catagory: string,
+  searchParam: string,
+  premiumParam: string
+) => {
   return useQuery({
     queryKey: ["post", catagory, searchParam],
-    queryFn: async () => await getAllPost(catagory, searchParam),
+    queryFn: async () => await getAllPost(catagory, searchParam, premiumParam),
   });
 };
 export const useGetSpecificUserPost = (userId: string) => {

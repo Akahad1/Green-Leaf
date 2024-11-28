@@ -15,12 +15,13 @@ interface FilterParams {
 const CommonPage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   const [catagoryParam, setCatagoryParm] = useState<string>("");
   const [searchParam, setSearchParm] = useState<string>("");
+  const [premiumParam, setpremiumParm] = useState<string>("");
 
   const {
     data: CategoryData,
     isSuccess: categorySuccess,
     isLoading,
-  } = useGetAllPost(catagoryParam, searchParam);
+  } = useGetAllPost(catagoryParam, searchParam, premiumParam);
 
   console.log(catagoryParam, searchParam);
   console.log(CategoryData);
@@ -43,6 +44,7 @@ const CommonPage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
               setParm={setCatagoryParm}
               setSearchParm={setSearchParm}
               Parm={catagoryParam}
+              setpremiumParm={setpremiumParm}
             ></HomeSidebar>
           </div>
         </div>

@@ -1,25 +1,36 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FormEvent, useEffect } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { useUserLogin } from "@/hooks/auth.hook";
 import { useUser } from "@/context/user.provider";
+import { toast } from "sonner";
 
 const LoginPage = () => {
   const { mutate: handleUserLogIn, isPending, isSuccess } = useUserLogin();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // State for error message
   const route = useRouter();
   const { setIsLoading } = useUser();
 
   // Handle form submission
   const logInHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setErrorMessage(null); // Reset error message on new attempt
     const form = event.target as HTMLFormElement;
     const email = form.email.value;
     const password = form.password.value;
 
     const userInfo = { email, password };
-    handleUserLogIn(userInfo);
+
+    handleUserLogIn(userInfo, {
+      onError: (err: any) => {
+        // Display backend error message
+        const message = err.response?.data?.message || "Login failed!";
+        setErrorMessage(message);
+        toast.error(message); // Optional: Display toast notification
+      },
+    });
     setIsLoading(true);
   };
 
@@ -27,6 +38,7 @@ const LoginPage = () => {
   useEffect(() => {
     if (!isPending && isSuccess) {
       route.push("/"); // Navigate to the home page
+      toast.success("Logged in successfully!");
     }
   }, [isPending, isSuccess, route]);
 
@@ -46,7 +58,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen ">
+    <div className="flex justify-center items-center min-h-screen">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md space-y-6">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
           Log In
@@ -72,6 +84,13 @@ const LoginPage = () => {
             className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
+
+          {/* Error Message */}
+          {errorMessage && (
+            <div className="text-red-500 text-sm text-center">
+              {errorMessage}
+            </div>
+          )}
 
           {/* Submit Button */}
           <button

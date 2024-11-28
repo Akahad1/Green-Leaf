@@ -4,12 +4,14 @@ import React, { useEffect, useState } from "react";
 interface SearchFilterProps {
   setParm: React.Dispatch<React.SetStateAction<string>>;
   setSearchParm: React.Dispatch<React.SetStateAction<string>>;
+  setpremiumParm: React.Dispatch<React.SetStateAction<string>>;
   Parm: string;
 }
 
 const HomeSidebar: React.FC<SearchFilterProps> = ({
   setParm,
   setSearchParm,
+  setpremiumParm,
   Parm,
 }) => {
   const [contentType, setContentType] = useState<string>("");
@@ -23,6 +25,7 @@ const HomeSidebar: React.FC<SearchFilterProps> = ({
 
   // Update content type
   const handleContentTypeChange = (type: string) => {
+    setpremiumParm(type);
     setContentType(type);
   };
 
@@ -79,7 +82,7 @@ const HomeSidebar: React.FC<SearchFilterProps> = ({
         <div className="flex items-center mb-2">
           <input
             type="radio"
-            id="premium"
+            id="true"
             name="contentType"
             className="mr-2"
             value="true"
@@ -93,7 +96,7 @@ const HomeSidebar: React.FC<SearchFilterProps> = ({
         <div className="flex items-center mb-2">
           <input
             type="radio"
-            id="regular"
+            id="false"
             name="contentType"
             className="mr-2"
             value="false"

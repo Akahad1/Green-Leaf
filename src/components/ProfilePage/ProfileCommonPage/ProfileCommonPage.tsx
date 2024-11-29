@@ -12,7 +12,7 @@ export interface ProfileCommonPageProps {
 const ProfileCommonPage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   return (
     <div>
-      <div className="lg:bg-gray-100  w-full  pt-10  p-10 mt-[-28px] ">
+      <div className="lg:bg-gray-100  w-full  pt-10  lg:p-10 p-5 mt-[-28px] ">
         <div className=" bg-white rounded-lg shadow-md ">
           {/* Cover Image */}
           <ProfileImage userId={userId}></ProfileImage>

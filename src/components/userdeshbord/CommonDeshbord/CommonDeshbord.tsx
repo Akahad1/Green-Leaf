@@ -13,7 +13,7 @@ const CommonDeshbord: React.FC<TProps> = ({ user }) => {
   return (
     <div>
       {user?.role === "user" ? (
-        <div className=" lg:ml-10 ml-7 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
+        <div className=" lg:ml-16 ml-12 grid lg:grid-cols-3  md:grid-cols-2 grid-cols-1 ">
           <Link href="/deshbord/myContent">
             <div>
               <div className="border lg:border-slate-500 hover:bg-base-300  mb-10 bg-white p-10 w-80 h-60 ">
@@ -30,13 +30,13 @@ const CommonDeshbord: React.FC<TProps> = ({ user }) => {
                 <div className="flex justify-center mb-4">
                   <LuUsers size={28} className="mr-2 text-center mt-10  " />
                 </div>
-                <p className="text-black text-center text-xl"> MY Content</p>
+                <p className="text-black text-center text-xl"> MY Follower</p>
               </div>
             </div>
           </Link>
           <Link href="/deshbord/myFollowing">
             <div>
-              <div className="border lg:border-slate-500 hover:bg-base-300 bg-white p-10 w-80 h-60 ">
+              <div className="border lg:border-slate-500 lg:mt-0 mt-10 hover:bg-base-300 bg-white p-10 w-80 h-60 ">
                 <div className="flex justify-center mb-4">
                   <LuUsers size={28} className="mr-2 text-center mt-10  " />
                 </div>

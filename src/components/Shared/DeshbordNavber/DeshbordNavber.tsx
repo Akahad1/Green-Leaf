@@ -5,7 +5,7 @@ import { logOut } from "@/Services/AuthService";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Suspense } from "react";
-import { FaUser } from "react-icons/fa";
+import { FaHome, FaUser } from "react-icons/fa";
 import { FiMenu, FiX } from "react-icons/fi";
 import { IoMdLogOut } from "react-icons/io";
 
@@ -92,6 +92,13 @@ const DeshbordNavber: React.FC<DeshbordNavberProps> = ({
                         </Suspense>
                       </summary>
                       <ul className="bg-base-100 rounded-t-none p-3 mb-5">
+                        <li className="flex lg:hidden">
+                          <Link href="/">
+                            {" "}
+                            <FaHome className="inline h-4 w-4 mr-2 " />
+                            Home
+                          </Link>
+                        </li>
                         <li className="flex">
                           <Link href="/profile">
                             {" "}

@@ -12,7 +12,7 @@ const UserProfilePages: React.FC<UserProfilePagesProps> = ({ UserId }) => {
   return (
     <div>
       {" "}
-      <div className="lg:bg-gray-100  p-10 pt-8 mt-[-16px]">
+      <div className="lg:bg-gray-100  lg:p-10 p-2 pt-8 mt-[-16px]">
         <div className="container mx-auto bg-white rounded-lg shadow-md">
           {/* ProfileImage */}
 

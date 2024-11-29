@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { FaArrowUp, FaArrowDown, FaShareAlt } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 // import InfiniteScroll from "react-infinite-scroll-component";
 
 import Link from "next/link";
@@ -21,6 +21,7 @@ import DropdownToggle from "@/components/ProfilePage/DropdownToggle/DropdownTogg
 import { usePostVote } from "@/hooks/post.hook";
 import { toast } from "sonner";
 import InfiniteScroll from "react-infinite-scroll-component";
+import InfiniteScrollLoader from "@/components/Loader/InfiniteScrollLoader/InfiniteScrollLoader";
 
 interface data {
   data: TPostData;
@@ -134,17 +135,18 @@ const HomePostCard: React.FC<data> = ({ data, isLoading, currentUserId }) => {
   // }
   return (
     <InfiniteScroll
-      dataLength={data?.data.length} // Length of the loaded posts
+      loader={<InfiniteScrollLoader />}
+      dataLength={data?.data?.length} // Length of the loaded posts
       next={() => {}} // Function to load more posts
       hasMore={true} // Boolean indicating if there's more to load
-      loader={<CardLoder />} // Loader component for when fetching more
+      // Loader component for when fetching more
       endMessage={<p className="text-center">No more posts to show</p>} // Message when all posts are loaded
     >
       <div>
         {data?.data?.map((item: TPost) => (
           <div
             key={item?._id}
-            className="max-w-xl mt-5 border border-slate-300 bg-white lg:ml-0  shadow-md rounded-lg overflow-hidden mb-6"
+            className="max-w-xl mt-5 border border-slate-300 bg-white lg:ml-0  shadow-md rounded-lg overflow-hidden mb-6 mx-auto ml-3 mr-3"
           >
             {/* Post Header */}
             <div className="flex justify-between items-center px-4 py-3">

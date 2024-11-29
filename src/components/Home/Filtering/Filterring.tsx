@@ -14,12 +14,12 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   setSearchParm,
 }) => {
   return (
-    <div className="flex space-x-4 items-center lg:hidden ">
+    <div className="flex space-x-4 items-center lg:hidden  justify-center">
       <input
         type="text"
         onChange={(e) => setSearchParm(e.target.value)}
         placeholder="Search posts..."
-        className="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 lg:w-80"
+        className="border border-gray-300 p-2  rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 lg:w-80"
       />
 
       <select

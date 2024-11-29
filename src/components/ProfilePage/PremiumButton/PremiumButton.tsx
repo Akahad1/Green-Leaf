@@ -35,15 +35,19 @@ const PremiumButton: React.FC<PremiumButtonProps> = ({ userId, email }) => {
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
-            <h2 className="text-2xl font-bold mb-4">Upgrade to Premium</h2>
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full mx-4">
+            <h2 className="text-2xl font-bold mb-4 text-center">
+              Upgrade to Premium
+            </h2>
             <Elements stripe={stripePromise}>
-              {/* Other components */}
+              {/* Checkout Form Component */}
               <CheckoutForm price={1000} email={email} userId={userId} />
             </Elements>
-            <button className="btn btn-secondary mt-4" onClick={closeModal}>
-              Cancel
-            </button>
+            <div className="flex justify-center mt-4">
+              <button className="btn btn-secondary" onClick={closeModal}>
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       )}

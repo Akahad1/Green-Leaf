@@ -130,37 +130,55 @@ const ProfileInfo: React.FC<ProfileCommonPageProps> = ({ userId }) => {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full mx-4">
             <h2 className="text-2xl font-bold mb-4">Update Information</h2>
             <form onSubmit={handleSubmit}>
+              {/* Name Field */}
               <div className="mb-4">
-                <label className="block font-bold mb-1">Name</label>
+                <label htmlFor="fullname" className="block font-bold mb-1">
+                  Name
+                </label>
                 <input
+                  id="fullname"
                   type="text"
                   name="Fullname"
                   className="input input-bordered w-full"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block font-bold mb-1">Address</label>
-                <input
-                  type="text"
-                  name="address"
-                  className="input input-bordered w-full"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block font-bold mb-1">Bio</label>
-                <textarea
-                  name="bio"
-                  className="textarea textarea-bordered w-full"
+                  placeholder="Enter your full name"
                 />
               </div>
 
-              <div className="flex justify-end">
+              {/* Address Field */}
+              <div className="mb-4">
+                <label htmlFor="address" className="block font-bold mb-1">
+                  Address
+                </label>
+                <input
+                  id="address"
+                  type="text"
+                  name="address"
+                  className="input input-bordered w-full"
+                  placeholder="Enter your address"
+                />
+              </div>
+
+              {/* Bio Field */}
+              <div className="mb-4">
+                <label htmlFor="bio" className="block font-bold mb-1">
+                  Bio
+                </label>
+                <textarea
+                  id="bio"
+                  name="bio"
+                  className="textarea textarea-bordered w-full"
+                  placeholder="Tell us about yourself"
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex justify-end space-x-2">
                 <button
                   type="button"
-                  className="btn btn-secondary mr-2"
+                  className="btn btn-secondary"
                   onClick={closeModal}
                 >
                   Cancel

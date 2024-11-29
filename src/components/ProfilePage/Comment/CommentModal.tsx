@@ -16,14 +16,14 @@ const CommentModal: React.FC<ModalProps> = ({ children, onClose }) => {
       exit={{ opacity: 0 }}
     >
       <motion.div
-        className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md"
+        className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-5"
         initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}
         exit={{ scale: 0.8 }}
       >
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-gray-600"
+          className="absolute top-2 right-2 text-gray-600 focus:outline-none hover:text-gray-800"
         >
           &times;
         </button>

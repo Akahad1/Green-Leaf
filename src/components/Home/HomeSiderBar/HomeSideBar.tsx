@@ -32,7 +32,7 @@ const HomeSidebar: React.FC<SearchFilterProps> = ({
   // Notify parent component of filter changes
 
   return (
-    <div className="p-4  lg:sticky top-20 rounded-lg shadow-md lg:border-slate-500 ">
+    <div className="p-4  lg:sticky top-20 rounded-lg border bg-white  border-slate-700 shadow-md lg:border-slate-500 ">
       <h2 className="text-2xl font-semibold mb-4">Filters</h2>
       <h3 className="font-medium text-xl mb-3">Search</h3>
       <input

@@ -18,7 +18,7 @@ const page = async () => {
         </div>
 
         {/* Second Div - Main Content */}
-        <div className="col-span-1 lg:col-span-9 mr-2 ml-2">
+        <div className="col-span-1  lg:col-span-9 mr-2 ml-2">
           <CommonPage userId={user?._id}></CommonPage>
         </div>
       </div>

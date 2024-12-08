@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const ContactPage = () => {
   return (
-    <div className="min-h-screen container mx-auto mt-6   bg-base-100 flex flex-col items-center justify-center py-10 px-4">
+    <div className="min-h-screen container mx-auto mt-6    flex flex-col items-center justify-center py-10 px-4">
       <motion.h1
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}

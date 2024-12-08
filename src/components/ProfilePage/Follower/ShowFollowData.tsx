@@ -29,14 +29,14 @@ interface ShowFollowDataProps {
 
 const ShowFollowData: React.FC<ShowFollowDataProps> = ({ item }) => {
   return (
-    <div className="flex flex-col items-center p-6 bg-white to-red-500 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+    <div className="flex flex-col items-center  to-red-500 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 border border-slate-200">
       {item?.data.image ? (
         <Image
           src={item?.data.image}
           alt={`Image`}
           width={80}
           height={80}
-          className="w-20 h-20 rounded-full mb-4 border-4 border-white shadow-md object-cover"
+          className="w-32 h-32  mb-4 border-4 border-white shadow-md object-cover"
         />
       ) : (
         <Image
@@ -44,14 +44,10 @@ const ShowFollowData: React.FC<ShowFollowDataProps> = ({ item }) => {
           alt={`Image`}
           width={80}
           height={80}
-          className="w-20 h-20 rounded-full mb-4 border-4 border-white shadow-md object-cover"
+          className="w-32 h-32  mb-4 border-4 border-white shadow-md object-cover"
         />
       )}
-
-      <h2 className="text-xl font-bold ">{item?.data.name}</h2>
-      <p className="text-sm  mt-2 italic">
-        {item?.data.details || "No additional details provided."}
-      </p>
+      <p className="text-lg">{item?.data.name}</p>
     </div>
   );
 };

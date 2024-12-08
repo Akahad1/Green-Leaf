@@ -47,7 +47,7 @@ const SignupForm = () => {
   }, [isPending, isSuccess, router]);
 
   return (
-    <div className="flex justify-center items-center min-h-screen  p-4">
+    <div className="flex justify-center items-center min-h-screen bg-[#F4F2EE]  p-4">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
         <h2 className="text-3xl font-extrabold text-center mb-6 ">
           Create Your Account

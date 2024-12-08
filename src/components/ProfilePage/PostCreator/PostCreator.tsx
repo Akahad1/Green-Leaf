@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ProfileCommonPageProps } from "../ProfileCommonPage/ProfileCommonPage";
 import { useCreatePost } from "@/hooks/post.hook";
+import { useGetUser } from "@/hooks/user.hook";
 
 const PostEditorModal: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   const { mutate: addPost, isSuccess } = useCreatePost();
@@ -13,8 +14,8 @@ const PostEditorModal: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [images, setImages] = useState<File[]>([]);
   const [category, setCategory] = useState(""); // State for category
-  const [isPremium, setIsPremium] = useState(false); // State for premium toggle
-
+  const [isPremium, setIsPremium] = useState(false); // State for premium toggl
+  const { data: userData, isLoading } = useGetUser(userId);
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -81,16 +82,26 @@ const PostEditorModal: React.FC<ProfileCommonPageProps> = ({ userId }) => {
     <div className="relative">
       <div>
         <div className="w-12 mt-3 bg-gray-200"></div>
-        <div className="w-full max-w-lg flex p-4 rounded-lg shadow-xl bg-gradient-to-r  lg:mr-20 cursor-pointer hover:shadow-2xl transition-all">
-          <Link href="/profile">
-            <Image
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStqtktl3g6wWkAzvUAi32yzYgb-jZ0-Pn0sQ&s"
-              alt="Profile Image"
-              width={48}
-              height={48}
-              className="rounded-full mr-6 lg:mr-16 shadow-md"
-            />
-          </Link>
+        <div className="w-full max-w-lg lg:max-w-xl  flex p-4 rounded-lg shadow-xl bg-gradient-to-r  lg:mr-20 cursor-pointer hover:shadow-2xl transition-all">
+          {userData?.data.image ? (
+            <Link href="/profile">
+              <div className="avatar">
+                <div className="rounded-full w-12  mr-6 lg:mr-16 shadow-md">
+                  <img src={userData?.data?.image} />
+                </div>
+              </div>
+            </Link>
+          ) : (
+            <Link href="/profile">
+              <Image
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStqtktl3g6wWkAzvUAi32yzYgb-jZ0-Pn0sQ&s"
+                alt="Profile Image"
+                width={48}
+                height={48}
+                className="rounded-full mr-6 lg:mr-16 shadow-md"
+              />
+            </Link>
+          )}
           <input
             onClick={openModal}
             type="text"

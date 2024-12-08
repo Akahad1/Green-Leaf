@@ -5,6 +5,7 @@ import ShowFollowData from "./ShowFollowData";
 import { ProfileCommonPageProps } from "../ProfileCommonPage/ProfileCommonPage";
 import { useGetUser } from "@/hooks/user.hook";
 import axios from "axios";
+import Link from "next/link";
 
 type User = {
   data: {
@@ -39,7 +40,7 @@ const FollowersList: React.FC<ProfileCommonPageProps> = ({ userId }) => {
 
     for (const userId of userIds) {
       const response = await axios.get(
-        `https://green-leaf-server-site.vercel.app/api/a6/user/${userId}`
+        `http://localhost:5000/api/a6/user/${userId}`
       ); // Replace with axios.get
       userDataArray.push(response.data as User);
     }
@@ -62,16 +63,26 @@ const FollowersList: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   if (isLoading) return <div></div>;
   console.log("fetcheUserdata", fetchUserData);
   return (
-    <div>
-      <div className="text-2xl mt-3 mb-4">My Follower</div>
+    <div className="">
       <div>
         {fetchedUserData.length === 0 ? (
           <p className="text-2xl text-red-500 mt-5 ">You have No Follower</p>
         ) : (
-          <div className="grid grid-cols-2 gap-4">
-            {fetchedUserData.map((item, index) => (
-              <ShowFollowData key={index} item={item} />
-            ))}
+          <div className="bg-white border border-slate-300 p-3 px-5 pb-5">
+            <div className="flex lg:justify-between">
+              <div className="text-xl mt-3 mb-4 font-bold">My Follower</div>
+              <Link href="/deshbord/myFollower">
+                <div className="lg:text-base mt-4 mb-4 text-blue-600">
+                  See All Follower
+                </div>
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-3   gap-3 ">
+              {fetchedUserData.slice(0, 6).map((item, index) => (
+                <ShowFollowData key={index} item={item} />
+              ))}
+            </div>
           </div>
         )}
       </div>

@@ -54,13 +54,11 @@ const HomeProfileInfo: React.FC<ProfileCommonPageProps> = ({ userId }) => {
         {/* Profile Image */}
         <div className="absolute -bottom-16 left-6 rounded-full border-4 border-white">
           {userData?.data?.image ? (
-            <Image
-              src={userData?.data.image}
-              alt="Profile Image"
-              width={80} // Adjust this size based on your layout
-              height={80} // Make height the same as width for a circular image
-              className="rounded-full object-cover"
-            />
+            <div className="avatar">
+              <div className="w-24 rounded-full">
+                <img src={userData?.data?.image} />
+              </div>
+            </div>
           ) : (
             <Image
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStqtktl3g6wWkAzvUAi32yzYgb-jZ0-Pn0sQ&s"

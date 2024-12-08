@@ -32,13 +32,10 @@ export const getComment = async (postId: string) => {
       tags: ["comments"],
     },
   };
-  const res = await fetch(
-    `https://green-leaf-server-site.vercel.app/api/a6/comment/${postId}`,
-    {
-      next: {
-        tags: ["comments"],
-      },
-    }
-  );
+  const res = await fetch(`http://localhost:5000/api/a6/comment/${postId}`, {
+    next: {
+      tags: ["comments"],
+    },
+  });
   return res.json();
 };

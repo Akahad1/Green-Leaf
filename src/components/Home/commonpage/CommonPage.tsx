@@ -27,7 +27,7 @@ const CommonPage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   console.log(CategoryData);
 
   return (
-    <div className="flex justify-center  mb-10 lg:mx-0 lg:mr-0 mx-4 ">
+    <div className="flex justify-center   mb-10 lg:mx-0 lg:mr-0 mx-4 ">
       <div>
         <SearchFilter
           setParm={setCatagoryParm}
@@ -39,7 +39,7 @@ const CommonPage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
             data={CategoryData}
             isLoading={isLoading}
           ></HomePostCard>
-          <div className="hidden lg:block relative  w-60 ml-20">
+          <div className="hidden lg:block relative    w-72 ml-20">
             <HomeSidebar
               setParm={setCatagoryParm}
               setSearchParm={setSearchParm}

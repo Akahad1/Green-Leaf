@@ -89,7 +89,7 @@ const Nabver = () => {
         <div className="navbar-end">
           <button
             onClick={() => handleLogOut()}
-            className="btn btn-accent text-white rounded-full px-5"
+            className="btn  rounded-full px-5"
           >
             Log Out
           </button>

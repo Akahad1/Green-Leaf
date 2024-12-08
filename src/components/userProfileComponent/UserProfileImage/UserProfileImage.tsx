@@ -31,13 +31,11 @@ const UserProfileImage: React.FC<UserProfileUserId> = ({ UserId }) => {
       <div className="relative">
         {/* Cover Image */}
         {userData?.data?.coverImage ? (
-          <Image
-            src={userData?.data.coverImage}
-            alt="Cover Image"
-            width={1200}
-            height={300}
-            className="w-full  h-60  object-cover rounded-t-lg"
-          />
+          <div className="avatar">
+            <div className="w-32 rounded-full">
+              <img src={userData?.data?.image} />
+            </div>
+          </div>
         ) : (
           <Image
             src="https://www.shutterstock.com/image-photo/under-constriction-brick-road-rural-600nw-2249870461.jpg"

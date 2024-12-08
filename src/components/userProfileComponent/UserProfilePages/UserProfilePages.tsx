@@ -12,7 +12,7 @@ const UserProfilePages: React.FC<UserProfilePagesProps> = ({ UserId }) => {
   return (
     <div>
       {" "}
-      <div className="lg:bg-gray-100  lg:p-10 p-2 pt-8 mt-[-16px]">
+      <div className="  lg:p-10 p-2 pt-8 mt-[-16px]">
         <div className="container mx-auto bg-white rounded-lg shadow-md">
           {/* ProfileImage */}
 
@@ -23,7 +23,7 @@ const UserProfilePages: React.FC<UserProfilePagesProps> = ({ UserId }) => {
           <UserProfileInfo UserId={UserId}></UserProfileInfo>
         </div>
       </div>
-      <div className="container mx-auto  lg:p-10 pt-10  relative w-full  lg:bg-gray-100 ">
+      <div className="container mx-auto  lg:p-10 pt-10  relative w-full   ">
         <div className="lg:mr-10 flex justify-center">
           {/* <PostEditor></PostEditor> */}
           <UserPostCard UserId={UserId}></UserPostCard>

@@ -65,10 +65,14 @@ The purpose of this platform is to provide a centralized space for gardening ent
    [git clone https://github.com/yourusername/green-leaf.git](https://github.com/Akahad1/Assinment-6.git)
    cd green-leaf
 
-2. npm install
-3. npm run dev
-
-```
 
 
-```
+2. Install dependencies
+   ```bash
+    npm install
+
+   ```
+3. Run the development server:
+ 
+   ```bash
+   npm run dev

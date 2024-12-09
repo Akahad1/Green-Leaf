@@ -45,7 +45,7 @@ const UserProfileInfo: React.FC<UserProfileUserIds> = ({ UserId }) => {
   };
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <span>.</span>;
   }
 
   const { data } = userData;

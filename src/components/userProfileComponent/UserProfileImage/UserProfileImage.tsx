@@ -31,11 +31,13 @@ const UserProfileImage: React.FC<UserProfileUserId> = ({ UserId }) => {
       <div className="relative">
         {/* Cover Image */}
         {userData?.data?.coverImage ? (
-          <div className="avatar">
-            <div className="w-32 rounded-full">
-              <img src={userData?.data?.image} />
-            </div>
-          </div>
+          <Image
+            src={userData?.data.coverImage}
+            alt="Cover Image"
+            width={1200}
+            height={300}
+            className="w-full h-60 object-cover rounded-t-lg"
+          />
         ) : (
           <Image
             src="https://www.shutterstock.com/image-photo/under-constriction-brick-road-rural-600nw-2249870461.jpg"
@@ -49,13 +51,11 @@ const UserProfileImage: React.FC<UserProfileUserId> = ({ UserId }) => {
         {/* Profile Image */}
         <div className="absolute -bottom-16 left-6 rounded-full border-4 border-white">
           {userData?.data?.image ? (
-            <Image
-              src={userData?.data.image}
-              alt="Profile Image"
-              width={108}
-              height={128}
-              className="rounded-full w-full "
-            />
+            <div className="avatar">
+              <div className="w-32 rounded-full">
+                <img src={userData?.data?.image} />
+              </div>
+            </div>
           ) : (
             <Image
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStqtktl3g6wWkAzvUAi32yzYgb-jZ0-Pn0sQ&s"

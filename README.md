@@ -26,30 +26,47 @@ The purpose of this platform is to provide a centralized space for gardening ent
 - Premium Content Access: Allow users to explore exclusive content through payment integration, unlocking advanced gardening techniques.
 - Seamless User Experience: Offer an intuitive and easy-to-use interface, making it simple for users to browse, contribute, and engage with the platform.
 
-## Features
+### Features
+1. **Dynamic Content Creation:**  
+   Users can share gardening tips, guides, and seasonal advice using a rich text editor.
 
-- Content Creation: Users can create posts using a rich text editor to share tips, advice, and experiences.
-- User Authentication: Secure user authentication with role-based access control for regular users and administrators.
-- Premium Content: Payment integration allows users to access exclusive gardening content.
-- Upvote and Comment System: Users can engage with posts by upvoting them and adding comments, creating an interactive experience.
-- Follow Feature: Users can follow other gardeners to stay updated on their latest posts.
-- Category Filters: Posts can be categorized, making it easy for users to search for specific types of content, such as vegetables, herbs, or flowers.
-- Profile Management: Users can update their profile information, including profile pictures and bios.
-- Admin Panel: Administrators have access to a control panel for managing content, users, and payment histories, with graphical insights into platform activity.
-- PDF Generation: Users can generate PDFs of gardening guides for offline use, enhancing the accessibility of information.
+2. **Social Interaction Tools:**  
+   - Comment on posts.  
+   - Upvote or downvote content dynamically.  
+   - Follow or unfollow other users.  
 
-## Technology Stack
+3. **Category Filters and Search:**  
+   Quickly search and filter gardening posts by categories such as Vegetables, Flowers, Fruits, and Herbs.
 
-### List of technologies, frameworks, and tools used in the project.
+4. **Premium Access:**  
+   Exclusive gardening content accessible through Stripe-powered payment integration.
 
-- NextJs
-- TypeScript
-- Tailwind Css
-- Daisyui
+5. **User Profile Management:**  
+   Update profile details, add bio, and upload profile/cover images.
 
-- Sonner
+6. **Responsive Design:**  
+   Optimized for desktop and mobile devices.
+
+7. **Authentication and Role Management:**  
+   Secure login system with role-based authorization using [NextAuth.js](https://next-auth.js.org/).
 
 
+
+### Technologies Used
+- **Framework:** [Next.js](https://nextjs.org/)  
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) and [DaisyUI](https://daisyui.com/)  
+- **State Management:** [Redux](https://redux.js.org/)  
+- **Animations:** [Framer Motion](https://www.framer.com/motion/)  
+- **TypeScript:** Strongly typed for robust development.
+
+### Installation and Setup
+1. Clone the repository:  
+   ```bash
+   [git clone https://github.com/yourusername/green-leaf.git](https://github.com/Akahad1/Assinment-6.git)
+   cd green-leaf
+
+2. npm install
+3. npm run dev
 
 ```
 

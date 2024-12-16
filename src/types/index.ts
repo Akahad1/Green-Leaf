@@ -96,3 +96,20 @@ export interface TFollow {
   userId: string;
   followerId: string;
 }
+export interface IGroup {
+  name: string;
+  _id: string;
+  description?: string;
+  adminId: string;
+
+  coverImage: string;
+  members: string[];
+  posts: string[];
+  invitationRequests: InvitationRequestFrontend[];
+  createdAt: string;
+}
+
+interface InvitationRequestFrontend {
+  user: string; // User ID as a string
+  status: "pending" | "accepted" | "rejected"; // Same as backend
+}

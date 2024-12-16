@@ -1,7 +1,15 @@
 "use client";
+import Loader from "@/components/Loader/CommonLoader/CommonLoader";
+import { useSpecificGetMyGroup } from "@/hooks/group.hook";
 import React, { useState } from "react";
 
-const GroupProfile = () => {
+interface TProps {
+  groupId: string;
+  userId: string;
+}
+const GroupProfile: React.FC<TProps> = ({ groupId, userId }) => {
+  const { data: groupData, isLoading } = useSpecificGetMyGroup(userId, groupId);
+  console.log("groupid,", groupId, "userid", userId);
   const [activeTab, setActiveTab] = useState("discussion");
   const [coverImage, setCoverImage] = useState(
     "https://via.placeholder.com/1200x400"
@@ -19,7 +27,10 @@ const GroupProfile = () => {
       reader.readAsDataURL(e.target.files[0]);
     }
   };
-
+  if (isLoading) {
+    return <Loader></Loader>;
+  }
+  console.log("groupData", groupData);
   return (
     <div className="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
       {/* Cover Photo */}

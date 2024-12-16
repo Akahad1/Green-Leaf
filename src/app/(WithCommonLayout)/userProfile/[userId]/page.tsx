@@ -3,7 +3,7 @@ import UserProfilePages from "@/components/userProfileComponent/UserProfilePages
 
 const pages = async ({ params }: { params: any }) => {
   // Await the params before using its properties
-  const { userId } = params;
+  const { userId } = await params;
 
   return (
     <div>

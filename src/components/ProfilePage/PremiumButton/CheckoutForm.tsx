@@ -27,14 +27,11 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      fetch(
-        "https://green-leaf-server-site.vercel.app/api/a6/payment/createPament",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ price }),
-        }
-      )
+      fetch("http://localhost:5000/api/a6/payment/createPament", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ price }),
+      })
         .then((res) => res.json())
         .then((data) => {
           setClientSecret(data.result.clientSecret);
@@ -98,7 +95,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
       setSuccess("Payment successful!");
       // Store payment data in the database
 
-      fetch("https://green-leaf-server-site.vercel.app/api/a6/payment", {
+      fetch("http://localhost:5000/api/a6/payment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -48,6 +48,9 @@ const Nabver = () => {
                 <Link href="/imageGallery">Image gallery</Link>
               </li>
               <li>
+                <Link href="/group">Groups</Link>
+              </li>
+              <li>
                 <Link href="/deshbord">Dashboard</Link>
               </li>
               <li>
@@ -73,6 +76,9 @@ const Nabver = () => {
             </li>
             <li>
               <Link href="/imageGallery">Image gallery</Link>
+            </li>
+            <li>
+              <Link href="/group">Groups</Link>
             </li>
             <li>
               <Link href="/deshbord">Dashboard</Link>

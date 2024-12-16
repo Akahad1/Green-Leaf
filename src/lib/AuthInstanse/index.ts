@@ -2,7 +2,7 @@
 import axios from "axios";
 import { cookies } from "next/headers";
 const AxiosInstance = axios.create({
-  baseURL: "https://green-leaf-server-site.vercel.app/api/a6",
+  baseURL: "http://localhost:5000/api/a6",
 });
 AxiosInstance.interceptors.request.use(
   async function (config) {

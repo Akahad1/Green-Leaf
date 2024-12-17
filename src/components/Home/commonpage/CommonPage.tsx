@@ -27,20 +27,21 @@ const CommonPage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   console.log(CategoryData);
 
   return (
-    <div className="flex justify-center   mb-10 lg:mx-0 lg:mr-0 mx-4 ">
+    <div className="flex    mb-10  ">
       <div>
         <SearchFilter
           setParm={setCatagoryParm}
           setSearchParm={setSearchParm}
         ></SearchFilter>
-        <div className="flex justify-between lg:ml-8">
+        <div className="flex justify-between gap-6">
           <HomePostCard
             currentUserId={userId}
             data={CategoryData}
             isLoading={isLoading}
           ></HomePostCard>
-          <div className="hidden lg:block relative    w-72 ml-20">
+          <div className="hidden lg:block relative  w-80 ">
             <HomeSidebar
+              userId={userId}
               setParm={setCatagoryParm}
               setSearchParm={setSearchParm}
               Parm={catagoryParam}

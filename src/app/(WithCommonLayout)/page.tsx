@@ -8,9 +8,9 @@ const page = async () => {
 
   return (
     <div className="w-full">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12  gap-6">
         {/* First Div - Sidebar on Large Screens */}
-        <div className="lg:col-span-3 hidden lg:block relative lg:mr-10">
+        <div className="lg:col-span-3 hidden lg:block relative ">
           <div className="bg-white lg:sticky top-20 rounded-lg shadow-md">
             {/* Profile Info */}
             <HomeProfileInfo userId={user?._id}></HomeProfileInfo>

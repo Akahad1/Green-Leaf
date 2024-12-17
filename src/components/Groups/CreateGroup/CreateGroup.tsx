@@ -99,7 +99,7 @@ const CreateGroup: React.FC<TUserId> = ({ userId }) => {
         ) : (
           <div>
             {AllMyGroup?.data?.map((group: IGroup) => (
-              <Link href={`/group/${group?._id}`} key={group._id}>
+              <Link href={`/group/${group._id}`} key={group._id}>
                 <div className="flex gap-6 mt-5 mb-5 hover:bg-gray-200 p-3">
                   {group.coverImage ? (
                     <Image

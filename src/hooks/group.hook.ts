@@ -5,6 +5,7 @@ import {
   getSpecificMyGroup,
   memberApproval,
   sendInviteRequest,
+  updateSpecificMyGroup,
 } from "@/Services/Group";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
@@ -13,6 +14,12 @@ import { toast } from "sonner";
 interface InviteRequestPayload {
   groupId: string;
   userId: string;
+}
+interface TUpGroup {
+  userId: string;
+  groupId: string;
+
+  groupData: { coverImage: string | null };
 }
 interface TMemberApproval {
   groupId: string;
@@ -50,6 +57,28 @@ export const usesendInviteRequest = () => {
 
     onSuccess: () => {
       toast.success("Join Reqest Send Successfully");
+
+      queryClient.invalidateQueries({
+        queryKey: ["group"],
+        exact: false,
+      });
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+export const useUpdateSpecificMyGroup = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<any, Error, TUpGroup>({
+    mutationKey: ["group"],
+    mutationFn: async ({ userId, groupId, groupData }: TUpGroup) => {
+      return await updateSpecificMyGroup(userId, groupId, groupData);
+    },
+
+    onSuccess: () => {
+      toast.success("Group Update Successfully");
 
       queryClient.invalidateQueries({
         queryKey: ["group"],

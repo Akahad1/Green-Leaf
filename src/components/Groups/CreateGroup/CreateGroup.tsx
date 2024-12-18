@@ -105,7 +105,7 @@ const CreateGroup: React.FC<TUserId> = ({ userId }) => {
                     <Image
                       src={group.coverImage}
                       alt="Group Cover"
-                      className="w-10 h-10 rounded-full"
+                      className="w-14 h-14 rounded-xl"
                       width={60}
                       height={60}
                     />

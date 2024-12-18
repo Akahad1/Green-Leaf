@@ -39,6 +39,23 @@ export const getSpecificMyGroup = async (
     throw new Error(err.message);
   }
 };
+export const updateSpecificMyGroup = async (
+  userId: string,
+  groupId: string,
+  groupData: any
+): Promise<any> => {
+  try {
+    const { data } = await AxiosInstance.put(
+      `/groups/${userId}/group/${groupId}`,
+      groupData
+    );
+
+    revalidateTag("group");
+    return data;
+  } catch (err: any) {
+    throw new Error(err.message);
+  }
+};
 export const getNotInvolvedGroup = async (userId: string): Promise<any> => {
   try {
     const { data } = await AxiosInstance.get(`/groups/not-involved/${userId}`);

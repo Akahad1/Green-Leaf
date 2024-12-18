@@ -14,7 +14,7 @@ const ProfileCommonPage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
     <div>
       <div className=" w-full  pt-10  lg:p-2 p-5 mt-[-28px] ">
         <div className=" bg-white rounded-lg shadow-md ">
-          {/* Cover Image */}
+          {/* Image */}
           <ProfileImage userId={userId}></ProfileImage>
 
           {/* Profile Info */}

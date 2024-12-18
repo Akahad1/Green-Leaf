@@ -1,10 +1,15 @@
 "use client";
 import Loader from "@/components/Loader/CommonLoader/CommonLoader";
-import { useMemberApproval, useSpecificGetMyGroup } from "@/hooks/group.hook";
+import {
+  useMemberApproval,
+  useSpecificGetMyGroup,
+  useUpdateSpecificMyGroup,
+} from "@/hooks/group.hook";
 import Image from "next/image";
 
 import React, { useState } from "react";
 import { toast } from "sonner";
+import { uploadImageToImgBB } from "./UploadImage";
 
 interface TProps {
   groupId: string;
@@ -23,18 +28,48 @@ interface TReq {
 const GroupProfile: React.FC<TProps> = ({ groupId, userId }) => {
   const { data: groupData, isLoading } = useSpecificGetMyGroup(userId, groupId);
   const { mutate: ApprovMember, isSuccess } = useMemberApproval();
+  const { mutate: updateGroup } = useUpdateSpecificMyGroup();
 
   const [requests, setRequests] = useState([]);
   console.log("groupid,", groupId, "userid", userId);
   const [activeTab, setActiveTab] = useState("discussion");
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [isLoadings, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const [coverImage, setCoverImage] = useState(
     "https://via.placeholder.com/1200x400"
   );
 
   // Function to handle image upload
-  const handleImageChange = async (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {};
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const uploadedUrl = await uploadImageToImgBB(file);
+      if (uploadedUrl) {
+        setImageUrl(uploadedUrl);
+        console.log(imageUrl);
+        updateGroup({
+          userId,
+          groupId,
+          groupData: { coverImage: uploadedUrl },
+        });
+      } else {
+        setError("Failed to upload the image.");
+      }
+    } catch (err) {
+      setError("An error occurred during upload.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleRequest = (requestId: string, status: string) => {
     console.log(requestId);
     ApprovMember({ groupId, requestId, status });
@@ -48,50 +83,59 @@ const GroupProfile: React.FC<TProps> = ({ groupId, userId }) => {
     return <Loader></Loader>;
   }
   console.log("groupData", groupData);
-  console.log("requests", requests);
-  console.log("user", requests);
+
   return (
-    <div className="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-      {/* Cover Photo */}
-      <div
-        className="relative h-48 bg-cover bg-center"
-        style={{
-          backgroundImage: `url('${coverImage}')`,
-        }}
+    <div className="w-full relative max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+      {groupData?.data.coverImage ? (
+        <Image
+          src={groupData?.data.coverImage}
+          alt="Cover Image"
+          width={1200}
+          height={300}
+          className="w-full h-60 object-cover rounded-t-lg"
+        />
+      ) : (
+        <Image
+          src="https://www.shutterstock.com/image-photo/under-constriction-brick-road-rural-600nw-2249870461.jpg"
+          alt="Cover Image"
+          width={1200}
+          height={300}
+          className="w-full h-60 object-cover rounded-t-lg"
+        />
+      )}
+
+      {/* Cover Image Upload Plus Icon */}
+      <label
+        htmlFor="cover-input"
+        className="absolute top-4 right-4 cursor-pointer"
       >
-        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-        {/* Edit Icon */}
-        <div className="absolute top-2 right-2">
-          <label htmlFor="coverImageInput" className="cursor-pointer">
-            <div className="p-2 bg-gray-800 bg-opacity-70 text-white rounded-full hover:bg-gray-700">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                className="w-5 h-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.232 5.232l3.536 3.536M9 11l6.768-6.768a2.5 2.5 0 113.536 3.536L12.5 14.5M9 11l-5 5V21h5l5-5m-5-5l5 5"
-                />
-              </svg>
-            </div>
-          </label>
-          <input
-            id="coverImageInput"
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={handleImageChange}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-8 w-8 text-gray-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M12 4v16m8-8H4"
           />
-        </div>
-      </div>
+        </svg>
+      </label>
+
+      {/* Hidden Cover Image Input */}
+      <input
+        id="cover-input"
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+        className="hidden"
+      />
 
       {/* Group Info */}
-      <div className="p-4">
+      <div className="p-4 mt-10 mb-5">
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-bold text-gray-800">

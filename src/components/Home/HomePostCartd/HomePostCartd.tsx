@@ -146,7 +146,7 @@ const HomePostCard: React.FC<data> = ({ data, isLoading, currentUserId }) => {
         {data?.data?.map((item: TPost) => (
           <div
             key={item?._id}
-            className="max-w-xl mt-5 border border-slate-300 bg-white lg:ml-0  shadow-md rounded-lg overflow-hidden mb-6 mx-auto ml-3 mr-3"
+            className="max-w-xl mt-5 border border-slate-300 bg-white lg:ml-0  shadow-md rounded-lg overflow-hidden mb-6 mx-auto lg:mr-3"
           >
             {/* Post Header */}
             <div className="flex justify-between items-center px-4 py-3">

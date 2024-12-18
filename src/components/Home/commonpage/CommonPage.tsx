@@ -31,6 +31,7 @@ const CommonPage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
       <div>
         <SearchFilter
           setParm={setCatagoryParm}
+          userId={userId}
           setSearchParm={setSearchParm}
         ></SearchFilter>
         <div className="flex justify-between gap-6">

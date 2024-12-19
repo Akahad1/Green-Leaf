@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import { toast } from "sonner";
 import { uploadImageToImgBB } from "./UploadImage";
 import GroupManagment from "../GroupManagment/GroupManagment";
+import GroupDiscussion from "../GroupDiscussion/GroupDiscussion";
 
 interface TProps {
   groupId: string;
@@ -86,127 +87,131 @@ const GroupProfile: React.FC<TProps> = ({ groupId, userId }) => {
   console.log("groupData", groupData);
 
   return (
-    <div className="w-full relative max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-      {groupData?.data.coverImage ? (
-        <Image
-          src={groupData?.data.coverImage}
-          alt="Cover Image"
-          width={1200}
-          height={300}
-          className="w-full h-60 object-cover rounded-t-lg"
-        />
-      ) : (
-        <Image
-          src="https://www.shutterstock.com/image-photo/under-constriction-brick-road-rural-600nw-2249870461.jpg"
-          alt="Cover Image"
-          width={1200}
-          height={300}
-          className="w-full h-60 object-cover rounded-t-lg"
-        />
-      )}
-
-      {/* Cover Image Upload Plus Icon */}
-      <label
-        htmlFor="cover-input"
-        className="absolute top-4 right-4 cursor-pointer"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-8 w-8 text-gray-500"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M12 4v16m8-8H4"
+    <div className="w-full relative max-w-4xl mx-auto  ">
+      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        {groupData?.data.coverImage ? (
+          <Image
+            src={groupData?.data.coverImage}
+            alt="Cover Image"
+            width={1200}
+            height={300}
+            className="w-full h-60 object-cover rounded-t-lg"
           />
-        </svg>
-      </label>
+        ) : (
+          <Image
+            src="https://www.shutterstock.com/image-photo/under-constriction-brick-road-rural-600nw-2249870461.jpg"
+            alt="Cover Image"
+            width={1200}
+            height={300}
+            className="w-full h-60 object-cover rounded-t-lg"
+          />
+        )}
 
-      {/* Hidden Cover Image Input */}
-      <input
-        id="cover-input"
-        type="file"
-        accept="image/*"
-        onChange={handleFileChange}
-        className="hidden"
-      />
+        {/* Cover Image Upload Plus Icon */}
+        <label
+          htmlFor="cover-input"
+          className="absolute top-4 right-4 cursor-pointer"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-8 w-8 text-gray-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+        </label>
 
-      {/* Group Info */}
-      <div className="p-4 mt-10 mb-5">
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-800">
-              {groupData?.data?.name}
-            </h1>
-            <p className="text-gray-600">
-              Members: {groupData?.data?.members.length}
-            </p>
-          </div>
-          <div className="flex gap-2">
-            <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-              Invite
-            </button>
-            <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">
-              Share
-            </button>
+        {/* Hidden Cover Image Input */}
+        <input
+          id="cover-input"
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          className="hidden"
+        />
+
+        {/* Group Info */}
+        <div className="p-4 mt-10 mb-5">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-800">
+                {groupData?.data?.name}
+              </h1>
+              <p className="text-gray-600">
+                Members: {groupData?.data?.members.length}
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                Invite
+              </button>
+              <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">
+                Share
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Tabs */}
-      <div className="border-b">
-        <div className="flex">
-          <button
-            className={`flex-1 py-2 text-center ${
-              activeTab === "about"
-                ? "border-b-2 border-blue-500 text-blue-500"
-                : "text-gray-600 hover:text-gray-800"
-            }`}
-            onClick={() => setActiveTab("about")}
-          >
-            About
-          </button>
-          <button
-            className={`flex-1 py-2 text-center ${
-              activeTab === "discussion"
-                ? "border-b-2 border-blue-500 text-blue-500"
-                : "text-gray-600 hover:text-gray-800"
-            }`}
-            onClick={() => setActiveTab("discussion")}
-          >
-            Discussion
-          </button>
-          <button
-            className={`flex-1 py-2 text-center ${
-              activeTab === "members"
-                ? "border-b-2 border-blue-500 text-blue-500"
-                : "text-gray-600 hover:text-gray-800"
-            }`}
-            onClick={() => setActiveTab("members")}
-          >
-            Members
-          </button>
-          <button
-            className={`flex-1 py-2 text-center ${
-              activeTab === "Managment"
-                ? "border-b-2 border-blue-500 text-blue-500"
-                : "text-gray-600 hover:text-gray-800"
-            }`}
-            onClick={() => {
-              setActiveTab("Managment");
-              setRequests(
-                groupData?.data?.invitationRequests.filter(
-                  (req: { status: string }) => req.status === "pending"
-                )
-              );
-            }}
-          >
-            Managment
-          </button>
+        {/* Tabs */}
+        <div className="border-b">
+          <div className="flex">
+            <button
+              className={`flex-1 py-2 text-center ${
+                activeTab === "about"
+                  ? "border-b-2 border-blue-500 text-blue-500"
+                  : "text-gray-600 hover:text-gray-800"
+              }`}
+              onClick={() => setActiveTab("about")}
+            >
+              About
+            </button>
+            <button
+              className={`flex-1 py-2 text-center ${
+                activeTab === "discussion"
+                  ? "border-b-2 border-blue-500 text-blue-500"
+                  : "text-gray-600 hover:text-gray-800"
+              }`}
+              onClick={() => setActiveTab("discussion")}
+            >
+              Discussion
+            </button>
+            <button
+              className={`flex-1 py-2 text-center ${
+                activeTab === "members"
+                  ? "border-b-2 border-blue-500 text-blue-500"
+                  : "text-gray-600 hover:text-gray-800"
+              }`}
+              onClick={() => setActiveTab("members")}
+            >
+              Members
+            </button>
+            {groupData?.data.adminId === userId && (
+              <button
+                className={`flex-1 py-2 text-center ${
+                  activeTab === "Managment"
+                    ? "border-b-2 border-blue-500 text-blue-500"
+                    : "text-gray-600 hover:text-gray-800"
+                }`}
+                onClick={() => {
+                  setActiveTab("Managment");
+                  setRequests(
+                    groupData?.data?.invitationRequests.filter(
+                      (req: { status: string }) => req.status === "pending"
+                    )
+                  );
+                }}
+              >
+                Managment
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -214,37 +219,35 @@ const GroupProfile: React.FC<TProps> = ({ groupId, userId }) => {
       <div className="p-4">
         {activeTab === "about" && (
           <div>
-            <h2 className="text-lg font-semibold text-gray-800">
-              গ্রুপ সম্পর্কে
-            </h2>
+            <h2 className="text-lg font-semibold text-gray-800">About Group</h2>
             <p className="text-gray-600 mt-2">
-              আমাদের এই গ্রুপটি গার্ডেনিং নিয়ে আলোচনা এবং জ্ঞান ভাগাভাগি করার
-              জন্য।
+              <span>Description: </span>
+              {groupData?.data.description}
             </p>
           </div>
         )}
 
         {activeTab === "discussion" && (
           <div>
-            <h2 className="text-lg font-semibold text-gray-800">আলোচনা</h2>
-            <p className="text-gray-600 mt-2">
-              এখানে সদস্যরা তাদের মতামত শেয়ার করে।
-            </p>
+            <GroupDiscussion
+              groupId={groupId}
+              userId={userId}
+            ></GroupDiscussion>
           </div>
         )}
 
         {activeTab === "members" && (
           <div>
-            <h2 className="text-lg font-semibold text-gray-800">সদস্যরা</h2>
+            <h2 className="text-lg font-semibold text-gray-800">Members</h2>
             <p className="text-gray-600 mt-2">
-              এই গ্রুপের সক্রিয় সদস্যদের তালিকা
+              List of active members of this group
             </p>
             <div>
               {groupData?.data?.members.map(
                 (user: Pick<TReq, "user">["user"]) => (
                   <div
                     key={user._id}
-                    className="flex mb-4 border p-3 rounded-md"
+                    className="flex mb-4 border border-slate-600 mt-3 p-3 rounded-md"
                   >
                     {/* User's Cover Image */}
                     {user.image ? (
@@ -277,7 +280,7 @@ const GroupProfile: React.FC<TProps> = ({ groupId, userId }) => {
             </div>
           </div>
         )}
-        {activeTab === "Managment" && (
+        {activeTab === "Managment" && groupData?.data.adminId === userId && (
           <div>
             <GroupManagment
               requests={requests}

@@ -2,6 +2,7 @@ import {
   createPost,
   deletedPost,
   getAllPost,
+  getGroupPost,
   getspecificUserPost,
   Postvote,
   updatePost,
@@ -26,6 +27,12 @@ export const useGetSpecificUserPost = (userId: string) => {
   return useQuery({
     queryKey: ["post", userId],
     queryFn: async () => await getspecificUserPost(userId),
+  });
+};
+export const useGetGroupPost = (groupId: string) => {
+  return useQuery({
+    queryKey: ["post", groupId],
+    queryFn: async () => await getGroupPost(groupId),
   });
 };
 export const useDeletePost = () => {

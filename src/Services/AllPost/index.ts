@@ -26,6 +26,14 @@ export const getspecificUserPost = async (userId: string) => {
     throw new Error(err.message);
   }
 };
+export const getGroupPost = async (groupId: string) => {
+  try {
+    const { data } = await AxiosInstance.get(`/post/group-post/${groupId}`);
+    return data;
+  } catch (err: any) {
+    throw new Error(err.message);
+  }
+};
 export const deletedPost = async (postid: string) => {
   try {
     const { data } = await AxiosInstance.delete(`/post/${postid}`);

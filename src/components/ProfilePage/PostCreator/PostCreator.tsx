@@ -8,7 +8,11 @@ import { ProfileCommonPageProps } from "../ProfileCommonPage/ProfileCommonPage";
 import { useCreatePost } from "@/hooks/post.hook";
 import { useGetUser } from "@/hooks/user.hook";
 
-const PostEditorModal: React.FC<ProfileCommonPageProps> = ({ userId }) => {
+interface TProps {
+  userId: string;
+  groupId?: string;
+}
+const PostEditorModal: React.FC<TProps> = ({ userId, groupId }) => {
   const { mutate: addPost, isSuccess } = useCreatePost();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -62,6 +66,10 @@ const PostEditorModal: React.FC<ProfileCommonPageProps> = ({ userId }) => {
 
     const formData = new FormData();
     formData.append("user", userId);
+    if (groupId) {
+      formData.append("group", groupId);
+    }
+
     formData.append("text", postContent);
     formData.append("catagory", category);
     formData.append("premium", String(isPremium));
@@ -82,11 +90,19 @@ const PostEditorModal: React.FC<ProfileCommonPageProps> = ({ userId }) => {
     <div className="relative">
       <div>
         <div className="w-12 mt-3 bg-gray-200"></div>
-        <div className="w-full max-w-lg lg:max-w-xl  flex p-4 rounded-lg shadow-xl bg-gradient-to-r  lg:mr-20 cursor-pointer hover:shadow-2xl transition-all">
+        <div
+          className={`w-full max-w-lg   flex p-4 rounded-lg shadow-xl bg-gradient-to-r   cursor-pointer hover:shadow-2xl  ${
+            groupId ? "" : "lg:max-w-xl  lg:mr-20 transition-all"
+          }`}
+        >
           {userData?.data.image ? (
             <Link href="/profile">
               <div className="avatar">
-                <div className="rounded-full w-12  mr-6 lg:mr-16 shadow-md">
+                <div
+                  className={`rounded-full w-12 ${
+                    groupId ? "" : "lg:mr-16"
+                  }  mr-6  shadow-md`}
+                >
                   <img src={userData?.data?.image} />
                 </div>
               </div>

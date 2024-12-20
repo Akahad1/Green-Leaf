@@ -1,6 +1,7 @@
 import {
   createPost,
   deletedPost,
+  getAllGroupPost,
   getAllPost,
   getGroupPost,
   getspecificUserPost,
@@ -33,6 +34,12 @@ export const useGetGroupPost = (groupId: string) => {
   return useQuery({
     queryKey: ["post", groupId],
     queryFn: async () => await getGroupPost(groupId),
+  });
+};
+export const useGetAllGroupPost = () => {
+  return useQuery({
+    queryKey: ["post"],
+    queryFn: async () => await getAllGroupPost(),
   });
 };
 export const useDeletePost = () => {

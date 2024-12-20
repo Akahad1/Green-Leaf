@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { uploadImageToImgBB } from "./UploadImage";
 import GroupManagment from "../GroupManagment/GroupManagment";
 import GroupDiscussion from "../GroupDiscussion/GroupDiscussion";
+import GroupShare from "../GroupShare/GroupShare";
 
 interface TProps {
   groupId: string;
@@ -149,12 +150,14 @@ const GroupProfile: React.FC<TProps> = ({ groupId, userId }) => {
               </p>
             </div>
             <div className="flex gap-2">
-              <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+              {/* <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
                 Invite
-              </button>
-              <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">
-                Share
-              </button>
+              </button> */}
+
+              <GroupShare
+                groupId={groupId}
+                groupName={groupData?.data.name}
+              ></GroupShare>
             </div>
           </div>
         </div>

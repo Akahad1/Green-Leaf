@@ -39,7 +39,7 @@ const GroupDiscussion = ({
 
           <p className="text-gray-600">
             <span>Description: </span>
-            {groupData?.data.description}
+            {groupData?.data?.description}
           </p>
         </div>
       </div>

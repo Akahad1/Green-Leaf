@@ -90,7 +90,7 @@ const GroupProfile: React.FC<TProps> = ({ groupId, userId }) => {
   return (
     <div className="w-full relative max-w-4xl mx-auto  ">
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        {groupData?.data.coverImage ? (
+        {groupData?.data?.coverImage ? (
           <Image
             src={groupData?.data.coverImage}
             alt="Cover Image"
@@ -156,7 +156,7 @@ const GroupProfile: React.FC<TProps> = ({ groupId, userId }) => {
 
               <GroupShare
                 groupId={groupId}
-                groupName={groupData?.data.name}
+                groupName={groupData?.data?.name}
               ></GroupShare>
             </div>
           </div>
@@ -195,7 +195,7 @@ const GroupProfile: React.FC<TProps> = ({ groupId, userId }) => {
             >
               Members
             </button>
-            {groupData?.data.adminId === userId && (
+            {groupData?.data?.adminId === userId && (
               <button
                 className={`flex-1 py-2 text-center ${
                   activeTab === "Managment"
@@ -283,7 +283,7 @@ const GroupProfile: React.FC<TProps> = ({ groupId, userId }) => {
             </div>
           </div>
         )}
-        {activeTab === "Managment" && groupData?.data.adminId === userId && (
+        {activeTab === "Managment" && groupData?.data?.adminId === userId && (
           <div>
             <GroupManagment
               requests={requests}

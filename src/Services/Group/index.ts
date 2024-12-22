@@ -15,15 +15,7 @@ export const createGroup = async (groupData: FieldValues): Promise<any> => {
     throw new Error(err.message);
   }
 };
-export const getMyGroup = async (userId: string): Promise<any> => {
-  try {
-    const { data } = await AxiosInstance.get(`/groups/${userId}`);
-    revalidateTag("group");
-    return data;
-  } catch (err: any) {
-    throw new Error(err.message);
-  }
-};
+
 export const getSpecificMyGroup = async (
   userId: string,
   groupId: string
@@ -50,6 +42,15 @@ export const updateSpecificMyGroup = async (
       groupData
     );
 
+    revalidateTag("group");
+    return data;
+  } catch (err: any) {
+    throw new Error(err.message);
+  }
+};
+export const getMyGroup = async (userId: string): Promise<any> => {
+  try {
+    const { data } = await AxiosInstance.get(`/groups/${userId}`);
     revalidateTag("group");
     return data;
   } catch (err: any) {

@@ -40,7 +40,7 @@ const CommonPage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
             data={CategoryData}
             isLoading={isLoading}
           ></HomePostCard>
-          <div className="hidden lg:block relative  w-80 ">
+          <div className="hidden lg:block  w-80 ">
             <HomeSidebar
               userId={userId}
               setParm={setCatagoryParm}

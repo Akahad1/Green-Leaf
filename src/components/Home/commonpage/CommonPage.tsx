@@ -27,27 +27,32 @@ const CommonPage: React.FC<ProfileCommonPageProps> = ({ userId }) => {
   console.log(CategoryData);
 
   return (
-    <div className="flex    mb-10  ">
-      <div>
+    <div className="flex mb-10">
+      <div className="flex-grow">
         <SearchFilter
           setParm={setCatagoryParm}
           userId={userId}
           setSearchParm={setSearchParm}
         ></SearchFilter>
         <div className="flex justify-between gap-6">
-          <HomePostCard
-            currentUserId={userId}
-            data={CategoryData}
-            isLoading={isLoading}
-          ></HomePostCard>
-          <div className="hidden lg:block  w-80 ">
-            <HomeSidebar
-              userId={userId}
-              setParm={setCatagoryParm}
-              setSearchParm={setSearchParm}
-              Parm={catagoryParam}
-              setpremiumParm={setpremiumParm}
-            ></HomeSidebar>
+          <div className="flex-grow h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200">
+            <HomePostCard
+              currentUserId={userId}
+              data={CategoryData}
+              isLoading={isLoading}
+            ></HomePostCard>
+          </div>
+
+          <div className="hidden relative lg:block w-80 lg:mt-[-78px]">
+            <div className="sticky top-0 flex-grow h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200">
+              <HomeSidebar
+                userId={userId}
+                setParm={setCatagoryParm}
+                setSearchParm={setSearchParm}
+                Parm={catagoryParam}
+                setpremiumParm={setpremiumParm}
+              ></HomeSidebar>
+            </div>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@ import React from "react";
 
 const CardLoader = () => {
   return (
-    <div className="lg:w-96 w-80 lg:ml-0 ml-5 mt-5 bg-white shadow-md rounded-lg overflow-hidden mb-6 animate-pulse">
+    <div className="lg:max-w-[calc(36rem-35px)]  lg:ml-0 ml-5 mt-5 bg-white shadow-md rounded-lg overflow-hidden mb-6 animate-pulse">
       {/* Post Header Loader */}
       <div className="flex justify-between items-center px-4 py-3">
         <div className="flex items-center">

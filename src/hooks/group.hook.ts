@@ -52,6 +52,7 @@ export const usesendInviteRequest = () => {
   return useMutation<any, Error, InviteRequestPayload>({
     mutationKey: ["group"],
     mutationFn: async ({ groupId, userId }: InviteRequestPayload) => {
+      console.log("T", groupId, userId);
       return await sendInviteRequest(groupId, userId);
     },
 
@@ -126,7 +127,7 @@ export const useSpecificGetMyGroup = (userId: string, groupId: string) => {
 };
 export const useNotInvolvedGroup = (userId: string) => {
   return useQuery({
-    queryKey: ["group", userId],
+    queryKey: ["notInvolvedGroup", userId],
     queryFn: async () => await getNotInvolvedGroup(userId),
   });
 };

@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import ShowMYGroup from "./ShowMYGroup/ShowMYGroup";
+import SideCardLoader from "@/components/Loader/SideCardLoader/SideCardLoader";
 
 interface SearchFilterProps {
   setParm: React.Dispatch<React.SetStateAction<string>>;
@@ -27,14 +28,14 @@ const HomeSidebar: React.FC<SearchFilterProps> = ({
 }) => {
   const { data: NotInvolvedGroup, isLoading } = useNotInvolvedGroup(userId);
 
-  const [status, setStatus] = useState("");
+  console.log("userId", userId);
 
-  const { mutate: SendRequest, isSuccess } = usesendInviteRequest();
+  const { mutate: SendRequest } = usesendInviteRequest();
 
   // Notify parent component of filter changes
 
   if (isLoading) {
-    return "loding..";
+    return <SideCardLoader></SideCardLoader>;
   }
   console.log("NotInvolvedGroup", NotInvolvedGroup);
 
@@ -68,7 +69,7 @@ const HomeSidebar: React.FC<SearchFilterProps> = ({
                 onClick={() => SendRequest({ groupId: group._id, userId })}
                 className="mt-4 w-full  text-white font-medium py-2 rounded-lg bg-blue-500 hover:bg-blue-600 transition"
               >
-                Request {status ? status : "to Join"}
+                Request to Join
               </button>
             </div>
           ))}

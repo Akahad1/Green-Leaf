@@ -83,9 +83,20 @@ const GroupProfile: React.FC<TProps> = ({ groupId, userId }) => {
   };
 
   if (isLoading) {
-    return <Loader></Loader>;
+    return (
+      <span>
+        <div className="relative">
+          {/* Cover Image Loader */}
+          <div className="w-full h-60 bg-gray-300 animate-pulse rounded-t-lg"></div>
+
+          {/* Profile Image Loader */}
+          <div className="absolute -bottom-16 left-6 rounded-full border-4 border-white">
+            <div className="w-32 h-32 bg-gray-300 animate-pulse rounded-full"></div>
+          </div>
+        </div>
+      </span>
+    );
   }
-  console.log("groupData", groupData);
 
   return (
     <div className="w-full relative max-w-4xl mx-auto  ">

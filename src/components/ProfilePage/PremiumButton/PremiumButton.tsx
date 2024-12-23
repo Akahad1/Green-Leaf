@@ -29,7 +29,10 @@ const PremiumButton: React.FC<PremiumButtonProps> = ({ userId, email }) => {
 
   return (
     <>
-      <button className="btn btn-primary" onClick={openModal}>
+      <button
+        className="  text-white font-medium py-2 rounded-lg bg-blue-600 hover:bg-blue-700 transition p-3"
+        onClick={openModal}
+      >
         Become a Premium User
       </button>
 

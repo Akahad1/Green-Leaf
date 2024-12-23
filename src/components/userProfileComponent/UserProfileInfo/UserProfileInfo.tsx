@@ -92,7 +92,7 @@ const UserProfileInfo: React.FC<UserProfileUserIds> = ({ UserId }) => {
         <div className="p-6 border-t border-gray-200 flex justify-between items-center">
           <div>
             <button
-              className="btn btn-primary"
+              className="w-full  text-white font-medium py-2 rounded-lg bg-blue-600 hover:bg-blue-700 transition p-3"
               onClick={handleFollowToggle}
               disabled={!loggedInUserId}
             >

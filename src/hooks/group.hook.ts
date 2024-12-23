@@ -50,9 +50,9 @@ export const usesendInviteRequest = () => {
   const queryClient = useQueryClient();
 
   return useMutation<any, Error, InviteRequestPayload>({
-    mutationKey: ["group"],
+    mutationKey: ["groups"],
     mutationFn: async ({ groupId, userId }: InviteRequestPayload) => {
-      console.log("T", groupId, userId);
+      console.log("T b", groupId, userId);
       return await sendInviteRequest(groupId, userId);
     },
 

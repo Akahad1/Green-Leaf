@@ -72,6 +72,7 @@ export const sendInviteRequest = async (
   userId: string
 ): Promise<any> => {
   try {
+    console.log("l", groupId, userId);
     const { data } = await AxiosInstance.post(
       `/groups/invite/${groupId}/${userId}`
     );

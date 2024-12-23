@@ -121,7 +121,10 @@ const ProfileInfo: React.FC<ProfileCommonPageProps> = ({ userId }) => {
           </div>
         </div>
         <div>
-          <button className="btn btn-primary" onClick={openModal}>
+          <button
+            className="w-full  text-white font-medium py-2 rounded-lg bg-blue-600 hover:bg-blue-700 transition p-3"
+            onClick={openModal}
+          >
             Edit Profile
           </button>
         </div>
@@ -183,7 +186,10 @@ const ProfileInfo: React.FC<ProfileCommonPageProps> = ({ userId }) => {
                 >
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  type="submit"
+                  className="  text-white font-medium py-2 rounded-lg bg-blue-600 hover:bg-blue-700 transition p-3"
+                >
                   Save Changes
                 </button>
               </div>

@@ -1,3 +1,4 @@
+import SideCardLoader from "@/components/Loader/SideCardLoader/SideCardLoader";
 import { useGetMyGroup } from "@/hooks/group.hook";
 import { IGroup } from "@/types";
 import Image from "next/image";
@@ -6,6 +7,9 @@ import React from "react";
 
 const ShowMYGroup = ({ userId }: { userId: string }) => {
   const { data: AllMyGroup, isLoading: groupLoader } = useGetMyGroup(userId);
+  if (groupLoader) {
+    return <SideCardLoader></SideCardLoader>;
+  }
   return (
     <div>
       <div className="p-4     max-w-xs  rounded-lg border border-gray-200 shadow-md  bg-white ">

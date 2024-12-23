@@ -1,6 +1,6 @@
 "use client";
 
-import Loader from "@/components/Loader/CommonLoader/CommonLoader";
+import GroupSideLoader from "@/components/Loader/GroupSideLoader/GroupSideLoader";
 import { useCreateGroup, useGetMyGroup } from "@/hooks/group.hook";
 import { useGetUser } from "@/hooks/user.hook";
 import { IGroup } from "@/types";
@@ -40,7 +40,7 @@ const CreateGroup: React.FC<TUserId> = ({ userId }) => {
     form.reset();
   };
   if (isLoading || groupLoader) {
-    return <Loader></Loader>;
+    return <GroupSideLoader></GroupSideLoader>;
   }
   console.log(AllMyGroup);
   return (
@@ -124,7 +124,10 @@ const CreateGroup: React.FC<TUserId> = ({ userId }) => {
               className="h-16 mt-5 p-3 w-full border hover:border-slate-700 border-slate-300"
               name="description"
             />
-            <button type="submit" className="btn btn-primary mt-10 w-full">
+            <button
+              type="submit"
+              className=" text-white font-medium py-2 rounded-lg bg-blue-600 hover:bg-blue-700 transition p-3 mt-10 w-full"
+            >
               Create Group
             </button>
           </form>

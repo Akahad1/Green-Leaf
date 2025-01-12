@@ -37,8 +37,8 @@ const AdminDashboard = () => {
       setLoading(true);
       try {
         const [userResponse, postResponse] = await Promise.all([
-          axios.get("http://localhost:5000/api/a6/user"),
-          axios.get("http://localhost:5000/api/a6/post"),
+          axios.get("https://green-leaf-server-site.vercel.app/api/a6/user"),
+          axios.get("https://green-leaf-server-site.vercel.app/api/a6/post"),
         ]);
 
         setUserData(userResponse.data.data);

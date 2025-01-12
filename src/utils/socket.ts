@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://green-leaf-server-site.vercel.app");
 
 export const useSocket = () => {
   useEffect(() => {

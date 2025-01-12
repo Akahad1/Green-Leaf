@@ -4,7 +4,14 @@ import { logOut } from "@/Services/AuthService";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-const Nabver = () => {
+const Nabver = ({
+  user,
+}: {
+  user: {
+    role: string;
+    _id: string;
+  };
+}) => {
   const router = useRouter();
   const { setIsLoading } = useUser();
   const handleLogOut = () => {
@@ -50,9 +57,14 @@ const Nabver = () => {
               <li>
                 <Link href="/group">Groups</Link>
               </li>
-              <li>
-                <Link href="/deshbord">Dashboard</Link>
-              </li>
+              {user.role === "admin" ? (
+                <li>
+                  <Link href="/deshbord">Dashboard</Link>
+                </li>
+              ) : (
+                ""
+              )}
+
               <li>
                 <Link href="/aboutUs">About Us</Link>
               </li>
@@ -80,9 +92,13 @@ const Nabver = () => {
             <li>
               <Link href="/group">Groups</Link>
             </li>
-            <li>
-              <Link href="/deshbord">Dashboard</Link>
-            </li>
+            {user.role === "admin" ? (
+              <li>
+                <Link href="/deshbord">Dashboard</Link>
+              </li>
+            ) : (
+              ""
+            )}
             <li>
               <Link href="/aboutUs">About Us</Link>
             </li>

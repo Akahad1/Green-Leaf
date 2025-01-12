@@ -40,7 +40,7 @@ const FollowersList: React.FC<ProfileCommonPageProps> = ({ userId }) => {
 
     for (const userId of userIds) {
       const response = await axios.get(
-        `http://localhost:5000/api/a6/user/${userId}`
+        `https://green-leaf-server-site.vercel.app/api/a6/user/${userId}`
       ); // Replace with axios.get
       userDataArray.push(response.data as User);
     }
